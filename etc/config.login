@@ -36,7 +36,7 @@ lua_cpath = skynetroot .. "luaclib/?.so;" .. "./luaclib/?.so"
 -- 后台模式
 --daemon = "./login.pid"
 
-port = 8888				  -- 监听端口
+port = 8081				  -- 监听端口
 debug_port = 18000  -- debug console端口
 max_client = 4096
 

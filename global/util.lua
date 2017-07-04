@@ -86,6 +86,7 @@ function check_user_online(uid)
 end
 
 protobuf.register_file("./protocol/common.pb")
+protobuf.register_file("./protocol/login.pb")
 
 function send_client(fd, proto, data)
 	local payload = pb_encode(proto, data)

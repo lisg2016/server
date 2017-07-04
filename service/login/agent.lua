@@ -1,7 +1,7 @@
 local skynet = require "skynet"
 local netpack = require "netpack"
 local socket = require "socket"
-local json = require "cjson.safe"
+-- local json = require "cjson.safe"
 local snax = require "snax"
 
 local WATCHDOG
@@ -60,7 +60,7 @@ function CLIENT_MSG.login(req)
 		send_package(login_rsp)
 		return
 	end
-	-- db校验
+  
 	local player_id = 0
 	local login_sql = "select uid from tb_player where login = '"..req.login.."';"
 	local rs = skynet.call("mysqlpool", "lua", "execute", login_sql)
@@ -69,7 +69,6 @@ function CLIENT_MSG.login(req)
 	end
 
 	if player_id == 0 then
-		-- 创建新玩家
 		local uid = playerdc.req.get_nextid()
 		playerdc.req.add({uid=uid, login=req.login, passwd='123456'})
 		player_id = uid
@@ -80,13 +79,11 @@ function CLIENT_MSG.login(req)
 
 	local player_data = playerdc.req.get(player_id)
 	if not player_data['name'] or player_data['name'] == '' then
-		-- 创建角色
 		login_rsp.result = 'have create role'
 		send_package(login_rsp)
 		return
 	end
 
-	-- center处理
 	local login_game = skynet.call(center, 'lua', 'login_center', agent_head(), player_data)
 	if login_game ~= 0 then
 		login_rsp.result = 'login game error:' .. login_game
@@ -131,7 +128,6 @@ function CLIENT_MSG.create_role(req)
 
 	playerdc.req.update(player_data)
 
-	-- center处理
 	local login_game = skynet.call(center, 'lua', 'login_center', agent_head(), player_data)
 	if login_game ~= 0 then
 		login_rsp.result = 'login game error:' .. login_game
@@ -148,7 +144,6 @@ function CLIENT_MSG.create_role(req)
 	end
 end
 
--- 取游戏数据
 function CLIENT_MSG.lobby_data(req)
 	local data = skynet.call(center, 'lua', 'lobby_data_req')
 	local lobby_data_rsp = {
@@ -159,7 +154,6 @@ function CLIENT_MSG.lobby_data(req)
 	send_package(lobby_data_rsp)
 end
 
--- 请求进入游戏
 function CLIENT_MSG.enter_game(req)
 	local lobby_data_rsp = {
 		name = 'enter_game_rsp',
@@ -175,11 +169,13 @@ skynet.register_protocol {
 	name = "client",
 	id = skynet.PTYPE_CLIENT,
 	unpack = function (msg, sz)
-		local json_str = skynet.tostring(msg,sz)
-		-- print(json_str)
-        return json.decode(json_str)
+		return netpack.msg_unpack(msg, sz)
 	end,
-	dispatch = function (_, _, msg)
+	dispatch = function (_, _, msg_type, msg_data)
+    print("recv:"..msg_type)
+    print(msg_data)
+    do return end
+    
 		if not msg then
 			return
 		end

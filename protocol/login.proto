@@ -1,0 +1,151 @@
+package client;
+
+message LoginReq {
+	optional string Login = 1;
+	optional string Passwd = 2;
+	optional uint32 Time = 3;
+	optional uint32 SvrId = 4;
+	optional string Pf = 5;
+	optional string PfLogin = 6;
+}
+
+message LoginRsp {
+	enum CODE{
+		OK = 0;
+		SYSTEM_ERR = 1;		
+	} 
+	
+	optional CODE Result = 1;
+	optional uint32 PlayerId = 2;
+	optional string AgentHost = 3;
+	optional uint32 AgentPort = 4;
+	optional string LoginKey = 5;
+}
+
+message AgentLoginReq {
+    optional uint32 PlayerId = 1;
+    optional string LoginKey = 2;
+}
+
+message AgentLoginRsp {
+	enum LOGIN_RET {
+		OK = 0;
+		KEY_ERR = 1;
+		SYSTEM_ERR = 2;
+	}
+	optional LOGIN_RET Result = 1;
+	optional uint32 PlayerId = 2;
+	optional uint32 SvrId = 3;
+}
+
+message KickUser {
+	enum KICK_TYPE{
+		KICK = 0;
+		REPEAT_LOGIN = 1;
+	}
+	optional KICK_TYPE type = 1;
+}
+
+message RoleBaseInfo {
+	optional uint64 RoleId = 1;
+	optional uint32 RoleIndex = 2;
+	optional string Name = 3;
+	optional uint32 Level = 4;
+}
+
+message UserRoleList {
+	repeated RoleBaseInfo RoleData = 1;
+}
+
+message CreateRoleReq {
+	optional string Name = 1;
+}
+
+message CreateRoleRsp {
+	enum RESULT {
+		SUCCESS = 0;
+		NAMELEN = 1;
+		REPEAT = 2;
+		ROLEAMOUNT = 3;
+	}
+	optional RESULT Result = 1;
+}
+
+message LoginRoleReq {
+	optional uint32 RoleIndex = 1;
+}
+
+
+message ChatMsgReq {
+	optional uint64 DstRoleId = 1;
+	optional uint64 SrcRoleId = 2;
+}
+
+
+message QueryNameReq {
+	optional string Name = 1;
+}
+
+message QueryNameRsp {
+	optional string Name = 1;
+	optional uint32 RoleId = 2;
+}
+
+message SceneRole {
+	optional uint64 RoleId = 1;
+	optional string Name = 2;
+}
+
+message SceneRoleAdd {
+	repeated SceneRole SR = 1;
+}
+
+message SceneRoleDel {
+	repeated uint64 RoleId = 1;
+}
+
+message SceneMove {
+	optional uint64 RoleId = 1;
+	optional uint32 PosX = 2;
+	optional uint32 PosY = 3;
+	optional int64 Time = 4;
+}
+
+message LoginRoleRsp {
+	
+}
+
+enum SceneType {
+	NORMAL = 0;
+	CITY = 1;
+	RAID = 2;
+	PVP = 3;
+}
+
+message ModifyRoleBaseInfo {
+	optional string Name = 1;
+	optional uint32 HeadIcon = 2;
+}
+
+message ModifyRoleBaseInfoRsp {
+	enum RESULT {
+		SUCCESS = 0;
+		NAMELEN = 1;
+		REPEAT = 2;
+		ROLEAMOUNT = 3;
+	}
+	optional RESULT Result = 1;
+}
+
+message RoleBaseData {
+	optional uint32 GoldMoney = 1;
+	optional uint32 SilverMoney = 2;
+	optional uint32 ActiveValue = 3;
+	optional uint32 ActiveValMax = 4;
+	optional int64 ActiveUseTime = 5;
+}
+
+message RoleBaseExData {
+	optional string Name = 1;
+	optional uint32 HeadIcon = 2;
+}
