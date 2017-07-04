@@ -22,7 +22,7 @@ skynet.start(function()
   
   local test_proto = {utc_time = 1234}
   local proto_data = protobuf.encode("client.Heart", test_proto)
-  print("proto data"..proto_data)
+  print("proto data"..type(proto_data).." -- "..#proto_data.."         ")
   local test_proto2 = protobuf.decode("client.Heart", proto_data)
   print("111"..test_proto2.utc_time)
   print("222"..test_proto2.time_zone)

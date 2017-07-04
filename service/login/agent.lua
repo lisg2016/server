@@ -3,6 +3,7 @@ local netpack = require "netpack"
 local socket = require "socket"
 -- local json = require "cjson.safe"
 local snax = require "snax"
+local protobuf = require "protobuf"
 
 local WATCHDOG
 local gate
@@ -17,8 +18,11 @@ local login
 local is_login = 0
 
 local function send_package(name, pack)
-	local package,sz = netpack.pack(json.encode(pack))
-	socket.write(client_fd, package, sz)
+  local pack_data = pb_encode(name, pack)
+  socket.write(client_fd, netpack.msg_pack(name, pack_data))
+  
+	--local package,sz = netpack.pack(json.encode(pack))
+	--socket.write(client_fd, package, sz)
 end
 
 local function close_agent()
@@ -174,6 +178,11 @@ skynet.register_protocol {
 	dispatch = function (_, _, msg_type, msg_data)
     print("recv:"..msg_type)
     print(msg_data)
+    
+    local recv_msg = protobuf.decode(msg_type, msg_data)
+    print(recv_msg.Login)
+    print(recv_msg.Passwd)
+    send_package(msg_type, recv_msg)
     do return end
     
 		if not msg then
