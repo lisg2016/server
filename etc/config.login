@@ -32,6 +32,8 @@ cpath = skynetroot .. "cservice/?.so"
 lua_path = skynetroot .. "lualib/?.lua;" ..
        skynetroot .. "lualib/compat10/?.lua;" ..
        "./?.lua;" ..
+       "./config/?.lua;" ..
+       "./config/lua/?.lua;" ..
 		   "./lualib/?.lua;" ..
 		   "./global/?.lua;" ..
 		   "./service/login/?.lua"

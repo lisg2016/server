@@ -1,39 +1,4 @@
 return {
-[6] = {
-[1] = {
-RaidId = 6,
-RefreshIndex = 1,
-Weight = 10,
-MonsterId = 1,
-KillReward = 1,
-
-},
-[2] = {
-RaidId = 6,
-RefreshIndex = 0,
-Weight = 10,
-MonsterId = 2,
-KillReward = 1,
-
-},
-[3] = {
-RaidId = 6,
-RefreshIndex = 0,
-Weight = 10,
-MonsterId = 2,
-KillReward = 1,
-
-},
-[4] = {
-RaidId = 6,
-RefreshIndex = 0,
-Weight = 10,
-MonsterId = 1,
-KillReward = 1,
-
-},
-
-},
 [1] = {
 [1] = {
 RaidId = 1,
@@ -201,6 +166,41 @@ KillReward = 1,
 },
 [4] = {
 RaidId = 5,
+RefreshIndex = 0,
+Weight = 10,
+MonsterId = 1,
+KillReward = 1,
+
+},
+
+},
+[6] = {
+[1] = {
+RaidId = 6,
+RefreshIndex = 1,
+Weight = 10,
+MonsterId = 1,
+KillReward = 1,
+
+},
+[2] = {
+RaidId = 6,
+RefreshIndex = 0,
+Weight = 10,
+MonsterId = 2,
+KillReward = 1,
+
+},
+[3] = {
+RaidId = 6,
+RefreshIndex = 0,
+Weight = 10,
+MonsterId = 2,
+KillReward = 1,
+
+},
+[4] = {
+RaidId = 6,
 RefreshIndex = 0,
 Weight = 10,
 MonsterId = 1,

@@ -341,6 +341,7 @@ func (p *%sManager) Get(k ...uint32) %s {
 	}
 
 	if conv_type == "lua" {
+		load_file_data := "local data = {}\n"
 
 		for _, cfg := range cfg_excel {
 			xls_file, err := xlsx.OpenFile(EXCEL_DIR + cfg.Table)
@@ -388,7 +389,7 @@ func (p *%sManager) Get(k ...uint32) %s {
 
 			for row := 4; row < xls_sheet.MaxRow; row++ {
 
-            	xls_cell_t := xls_sheet.Cell(row, 0)
+				xls_cell_t := xls_sheet.Cell(row, 0)
 				if xls_cell_t == nil || xls_cell_t.Type() == xlsx.CellTypeError {
 					continue
 				}
@@ -413,8 +414,8 @@ func (p *%sManager) Get(k ...uint32) %s {
 					case "uint32":
 						var d int64
 						if d, err = cell_field.Int64(); err != nil {
-                            d = 0
-                        }
+							d = 0
+						}
 						row_data.Value = &d
 						is_key := false
 
@@ -431,17 +432,17 @@ func (p *%sManager) Get(k ...uint32) %s {
 						if is_key == true {
 							row_keys = append(row_keys, (int)(d))
 						}
-					case "float32","float64":
+					case "float32", "float64":
 						var d float64
 						if d, err = cell_field.Float(); err != nil {
-                            d = 0.0
-                        }
+							d = 0.0
+						}
 						row_data.Value = &d
 					case "string":
 						var d string
 						if d, err = cell_field.String(); err != nil {
-                            d = ""
-                        }
+							d = ""
+						}
 						row_data.Value = &d
 					}
 
@@ -467,7 +468,11 @@ func (p *%sManager) Get(k ...uint32) %s {
 			out_data := "return {\n" + dump_lua(data_root) + "\n}"
 			ioutil.WriteFile(LUA_DIR+"config_data_"+cfg.Name+".lua", []byte(out_data), os.ModeAppend)
 
+			load_file_data = load_file_data + "data." + cfg.Name + " = require \"config_data_" + cfg.Name + "\"\n"
 		}
+
+		load_file_data = load_file_data + "return data"
+		ioutil.WriteFile(LUA_DIR+"ConfigLoad.lua", []byte(load_file_data), os.ModeAppend)
 	}
 
 }
