@@ -10,6 +10,7 @@ log_dirname = "log"
 log_basename = "login"
 
 loginservice = "./service/login/?.lua;" ..
+         "./service/log/?.lua;" ..
 			   "./common/?.lua"
 
 -- LUA服务所在位置

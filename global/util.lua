@@ -1,6 +1,7 @@
 local skynet = require "skynet"
 local protobuf = require "protobuf"
 local socketdriver = require "socketdriver"
+local netpack = require "netpack"
 
 function do_redis(args, uid)
 	local cmd = assert(args[1])
@@ -99,4 +100,9 @@ function send_client(fd, proto, data)
 	msg = msg .. string.pack(">BI4", 1, 9)
 	msg = string.pack(">s2", msg)
 	socketdriver.send(fd, msg)	
+end
+
+function send_client_package(fd, name, pack)
+  local pack_data = pb_encode(name, pack)
+  socket.write(fd, netpack.msg_pack(name, pack_data))
 end

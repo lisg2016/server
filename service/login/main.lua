@@ -6,6 +6,9 @@ local protobuf = require "protobuf"
 
 skynet.start(function()
 	print("Server start")
+  
+  local log = skynet.uniqueservice("log")
+	skynet.call(log, "lua", "start")
 
 	local center = skynet.uniqueservice("login")
 
@@ -17,15 +20,23 @@ skynet.start(function()
 		maxclient = tonumber(skynet.getenv("max_client")),
 		nodelay = true,
 	})
-	print("Watchdog listen on ", tonumber(skynet.getenv("port")))
+	LOG_INFO("%s %d", "Watchdog listen on:", tonumber(skynet.getenv("port")))
   
   
+  -- 测试
   local test_proto = {utc_time = 1234}
   local proto_data = protobuf.encode("client.Heart", test_proto)
-  print("proto data"..type(proto_data).." -- "..#proto_data.."         ")
+  print("proto data: "..type(proto_data).." -- "..#proto_data.."         ")
   local test_proto2 = protobuf.decode("client.Heart", proto_data)
   print("111"..test_proto2.utc_time)
   print("222"..test_proto2.time_zone)
+  
+  test_proto = {DstRoleId=987654321123, SrcRoleId=987654321123}
+  proto_data = protobuf.encode("client.ChatMsgReq", test_proto)
+  test_proto2 = protobuf.decode("client.ChatMsgReq", proto_data)
+  print("len:"..#proto_data)
+  print("111 "..test_proto2.DstRoleId+1)
+  print("222 "..test_proto2.SrcRoleId+1)
 
 	skynet.exit()
 end)

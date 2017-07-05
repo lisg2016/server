@@ -15,21 +15,8 @@ local CMD = {}
 local client_fd
 local recv_pack_last_time
 local login
-local is_login = 0
-
-local function send_package(name, pack)
-  local pack_data = pb_encode(name, pack)
-  socket.write(client_fd, netpack.msg_pack(name, pack_data))
-  
-	--local package,sz = netpack.pack(json.encode(pack))
-	--socket.write(client_fd, package, sz)
-end
 
 local function close_agent()
-	if is_login == 1 then
-		skynet.call(login, 'lua', 'login_disconnect', agent_uid)
-	end
-
 	if client_fd then
 		skynet.call(gate, "lua", "kick", client_fd)
 	end
@@ -148,16 +135,6 @@ function CLIENT_MSG.create_role(req)
 	end
 end
 
-function CLIENT_MSG.lobby_data(req)
-	local data = skynet.call(center, 'lua', 'lobby_data_req')
-	local lobby_data_rsp = {
-		name = 'lobby_data_rsp',
-		data = data,
-	}
-
-	send_package(lobby_data_rsp)
-end
-
 function CLIENT_MSG.enter_game(req)
 	local lobby_data_rsp = {
 		name = 'enter_game_rsp',
@@ -169,6 +146,7 @@ function CLIENT_MSG.enter_game(req)
 	send_package(lobby_data_rsp)
 end
 
+-- 玩家登录消息
 skynet.register_protocol {
 	name = "client",
 	id = skynet.PTYPE_CLIENT,
@@ -177,24 +155,20 @@ skynet.register_protocol {
 	end,
 	dispatch = function (_, _, msg_type, msg_data)
     print("recv:"..msg_type)
-    print(msg_data)
     
     local recv_msg = protobuf.decode(msg_type, msg_data)
-    print(recv_msg.Login)
-    print(recv_msg.Passwd)
-    send_package(msg_type, recv_msg)
-    do return end
+    if not recv_msg then
+      return
+    end
     
-		if not msg then
-			return
-		end
 		recv_pack_last_time = skynet.now()
-		if is_login == 1 or msg.name == 'login' or msg.name == 'create_role' or msg.name == 'ping' then
+		if is_login == 1 or msg.name == 'login' then
 			pcall(CLIENT_MSG[msg.name], msg)
 		end
 	end
 }
 
+-- 服务消息处理
 function CMD.start(conf)
 	local fd = conf.client
 	gate = conf.gate
