@@ -1,4 +1,15 @@
 return {
+[4] = {
+[1] = {
+Id = 4,
+Name = "",
+ResourceId = "mine",
+BackImageAmount = 3,
+BattleTime = 300,
+
+},
+
+},
 [5] = {
 [1] = {
 Id = 5,
@@ -48,17 +59,6 @@ BattleTime = 300,
 Id = 3,
 Name = "",
 ResourceId = "plain",
-BackImageAmount = 3,
-BattleTime = 300,
-
-},
-
-},
-[4] = {
-[1] = {
-Id = 4,
-Name = "",
-ResourceId = "mine",
 BackImageAmount = 3,
 BattleTime = 300,
 

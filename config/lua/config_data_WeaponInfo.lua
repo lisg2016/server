@@ -1,4 +1,64 @@
 return {
+[3] = {
+[1] = {
+[1] = {
+Id = 3,
+Quality = 1,
+LevelLimit = 1,
+Height = 3,
+ResourceID = "h_axe_006",
+Rotate = 3,
+RotateAngle = 0,
+Atk = 36,
+Dur = 4,
+Cost = 11,
+FlyTime = 3000,
+FlyScale = 0.800000,
+Speed = 55,
+
+},
+
+},
+[2] = {
+[1] = {
+Id = 3,
+Quality = 2,
+LevelLimit = 1,
+Height = 3,
+ResourceID = "h_axe_006",
+Rotate = 3,
+RotateAngle = 0,
+Atk = 45,
+Dur = 5,
+Cost = 11,
+FlyTime = 3000,
+FlyScale = 0.800000,
+Speed = 55,
+
+},
+
+},
+[3] = {
+[1] = {
+Id = 3,
+Quality = 3,
+LevelLimit = 1,
+Height = 3,
+ResourceID = "h_axe_006",
+Rotate = 3,
+RotateAngle = 0,
+Atk = 54,
+Dur = 6,
+Cost = 11,
+FlyTime = 3000,
+FlyScale = 0.800000,
+Speed = 55,
+
+},
+
+},
+
+},
 [1] = {
 [1] = {
 [1] = {
@@ -113,66 +173,6 @@ Cost = 8,
 FlyTime = 2500,
 FlyScale = 0.800000,
 Speed = 75,
-
-},
-
-},
-
-},
-[3] = {
-[1] = {
-[1] = {
-Id = 3,
-Quality = 1,
-LevelLimit = 1,
-Height = 3,
-ResourceID = "h_axe_006",
-Rotate = 3,
-RotateAngle = 0,
-Atk = 36,
-Dur = 4,
-Cost = 11,
-FlyTime = 3000,
-FlyScale = 0.800000,
-Speed = 55,
-
-},
-
-},
-[2] = {
-[1] = {
-Id = 3,
-Quality = 2,
-LevelLimit = 1,
-Height = 3,
-ResourceID = "h_axe_006",
-Rotate = 3,
-RotateAngle = 0,
-Atk = 45,
-Dur = 5,
-Cost = 11,
-FlyTime = 3000,
-FlyScale = 0.800000,
-Speed = 55,
-
-},
-
-},
-[3] = {
-[1] = {
-Id = 3,
-Quality = 3,
-LevelLimit = 1,
-Height = 3,
-ResourceID = "h_axe_006",
-Rotate = 3,
-RotateAngle = 0,
-Atk = 54,
-Dur = 6,
-Cost = 11,
-FlyTime = 3000,
-FlyScale = 0.800000,
-Speed = 55,
 
 },
 
