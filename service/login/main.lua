@@ -3,10 +3,15 @@ local snax = require "snax"
 local cluster = require "cluster"
 local sprotoloader = require "sprotoloader"
 local protobuf = require "protobuf"
+local sharedata = require "skynet.sharedata"
+
 
 skynet.start(function()
 	print("Server start")
   
+  local cfg_data = require "config.Config"
+  sharedata.new("config_data", cfg_data)
+
   local log = skynet.uniqueservice("log")
 	skynet.call(log, "lua", "start")
 
@@ -37,6 +42,9 @@ skynet.start(function()
   print("len:"..#proto_data)
   print("111 "..test_proto2.DstRoleId+1)
   print("222 "..test_proto2.SrcRoleId+1)
+  
+  --local cfg_root = sharedata.query("config_data")
+  --print(cfg_root.CharacterInfo[1][1][1].Name)
 
 	skynet.exit()
 end)

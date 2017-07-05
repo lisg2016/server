@@ -3,6 +3,10 @@ thread = 8
 logger = nil
 logpath = "."
 harbor = 0
+-- standalone = "0.0.0.0:2013"
+-- address = "127.0.0.1:2526"
+-- master = "127.0.0.1:2013"
+
 start = "main"	-- main script
 bootstrap = "snlua bootstrap"	-- The service for bootstrap
 
@@ -27,6 +31,7 @@ cpath = skynetroot .. "cservice/?.so"
 -- 将添加到 package.path 中的路径，供 require 调用。
 lua_path = skynetroot .. "lualib/?.lua;" ..
        skynetroot .. "lualib/compat10/?.lua;" ..
+       "./?.lua;" ..
 		   "./lualib/?.lua;" ..
 		   "./global/?.lua;" ..
 		   "./service/login/?.lua"

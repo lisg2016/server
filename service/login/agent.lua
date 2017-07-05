@@ -4,6 +4,7 @@ local socket = require "socket"
 -- local json = require "cjson.safe"
 local snax = require "snax"
 local protobuf = require "protobuf"
+local sharedata = require "skynet.sharedata"
 
 local WATCHDOG
 local gate
@@ -155,14 +156,20 @@ skynet.register_protocol {
 	end,
 	dispatch = function (_, _, msg_type, msg_data)
     print("recv:"..msg_type)
-    
+            
+    local obj2 = sharedata.query "config_data"
+    print(obj2.CharacterInfo[1][1][1].Desc)
+
     local recv_msg = protobuf.decode(msg_type, msg_data)
     if not recv_msg then
       return
     end
     
+    print(recv_msg)
+    do return end
+    
 		recv_pack_last_time = skynet.now()
-		if is_login == 1 or msg.name == 'login' then
+		if is_login == 1 or msg_type == 'login' then
 			pcall(CLIENT_MSG[msg.name], msg)
 		end
 	end
@@ -173,7 +180,7 @@ function CMD.start(conf)
 	local fd = conf.client
 	gate = conf.gate
 	WATCHDOG = conf.watchdog
-
+  
 	skynet.fork(function()
 		while true do
 			if skynet.now() - recv_pack_last_time >= 1000 then

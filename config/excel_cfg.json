@@ -1,0 +1,143 @@
+[
+    {
+        "name": "LevelupInfo",
+        "table": "levelup_info.xlsx",
+        "keys": [
+            "Level"
+        ],
+        "multi": 0
+    },
+    {
+        "name": "SeasonReward",
+        "table": "season_reward.xlsx",
+        "keys": [
+            "Season_id",
+            "Rank_type"
+        ],
+        "multi": 1
+    },
+    {
+        "name": "GrowthReward",
+        "table": "growth_reward.xlsx"
+    },
+    {
+        "name": "SceneInfo",
+        "table": "scene_info.xlsx"
+    },
+    {
+        "name": "RoleInit",
+        "table": "role_init.xlsx",
+        "keys": [
+            "Id"
+        ],
+        "multi": 0
+    },
+    {
+        "name": "RoleInitItem",
+        "table": "role_init_item.xlsx",
+        "keys": [
+            "Id"
+        ],
+        "multi": 1
+    },
+    {
+        "name": "WeaponInfo",
+        "table": "weapon_info.xlsx",
+        "keys": [
+            "Id",
+            "Quality"
+        ],
+        "multi": 0
+    },
+    {
+        "name": "CharacterInfo",
+        "table": "character_info.xlsx",
+        "keys": [
+            "Id",
+            "Quality"
+        ],
+        "multi": 0
+    },
+    {
+        "name": "MonsterInfo",
+        "table": "monster_info.xlsx",
+        "keys": [
+            "Id"
+        ],
+        "multi": 0
+    },
+    {
+        "name": "MonsterWeapon",
+        "table": "monster_weapon.xlsx",
+        "keys": [
+            "Id"
+        ],
+        "multi": 1
+    },
+    {
+        "name": "RewardInfo",
+        "table": "reward_info.xlsx",
+        "keys": [
+            "RewardId"
+        ],
+        "multi": 1
+    },
+    {
+        "name": "RaidInfo",
+        "table": "raid_info.xlsx",
+        "keys": [
+            "Id"
+        ],
+        "multi": 0
+    },
+    {
+        "name": "RaidType",
+        "table": "raid_type.xlsx",
+        "keys": [
+            "Id"
+        ],
+        "multi": 0
+    },
+    {
+        "name": "RaidMonster",
+        "table": "raid_monster.xlsx",
+        "keys": [
+            "RaidId"
+        ],
+        "multi": 1
+    },
+    {
+        "name": "MapInfo",
+        "table": "map_info.xlsx",
+        "keys": [
+            "Id"
+        ],
+        "multi": 0
+    },
+    {
+        "name": "CharacterGrowth",
+        "table": "character_growth.xlsx",
+        "keys": [
+		    "Id",
+            "Level"
+        ],
+        "multi": 0
+    },
+    {
+        "name": "SystemConfig",
+        "table": "system_config.xlsx",
+        "keys": [
+		    "Type",
+            "SubType"
+        ],
+        "multi": 0
+    },
+    {
+        "name": "SystemMail",
+        "table": "system_mail.xlsx",
+        "keys": [
+		    "Id"
+        ],
+        "multi": 0
+    }
+]

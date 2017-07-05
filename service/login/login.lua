@@ -7,7 +7,7 @@ local cluster = require "cluster"
 
 local CMD = {}
 
-skynet.start(function()
+skynet.start(function() 
 	skynet.dispatch("lua", function(_,_, command, ...)
 		local f = CMD[command]
 		skynet.ret(skynet.pack(f(...)))

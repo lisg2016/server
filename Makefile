@@ -5,7 +5,7 @@ SHARED := -fPIC --shared
 LUA_CLIB_PATH ?= luaclib
 LUA_INC ?= ../skynet/3rd/lua
 
-CFLAGS = -g -O2 -Wall -I$(LUA_INC)
+CFLAGS = -g3 -O0 -Wall -I$(LUA_INC)
 
 LUA_CLIB = protobuf log
 
