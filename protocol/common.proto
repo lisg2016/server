@@ -1,0 +1,8 @@
+package client;
+
+message Heart {
+    optional uint32 timestamp = 1[default=0];      // 服务器的时间戳，以10ms为单位
+    optional uint32 utc_time = 2[default=0];       // 服务器utc时间
+    optional int32  time_zone = 3[default=0];      // 服务器时区差值
+}
+

@@ -85,9 +85,7 @@ function check_user_online(uid)
 	return skynet.call("gated", "lua", "is_online", uid)
 end
 
-protobuf.register_file("./protocol/netmsg.pb")
-protobuf.register_file("./protocol/user.pb")
-protobuf.register_file("./protocol/building.pb")
+protobuf.register_file("./protocol/common.pb")
 
 function send_client(fd, proto, data)
 	local payload = pb_encode(proto, data)
