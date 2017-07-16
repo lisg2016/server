@@ -40,7 +40,7 @@ mysql_host = "192.168.78.61"	-- mysql数据库主机
 mysql_port = 3306		-- mysql数据库端口
 mysql_db = "jdq"		-- mysql数据库库名
 mysql_user = "root"	-- mysql数据库帐号
-mysql_pwd = "aOS327*&^EE1Zh"		-- mysql数据库密码
+mysql_pwd = "123456"		-- mysql数据库密码
 
 login_port = 8081
 login_gate_num = 1024
