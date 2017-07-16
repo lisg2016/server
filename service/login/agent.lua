@@ -49,6 +49,7 @@ CLIENT_MSG['client.LoginReq'] = function (req)
 		msg_name = "client.LoginRsp",
 		Result = 'OK',
 	}
+	send_client_package(client_fd, login_rsp)
 	if true or req.login == '' then
 		login_rsp.Result = 'SYSTEM_ERR'
 		send_client_package(client_fd, login_rsp)

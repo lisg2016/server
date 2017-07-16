@@ -11,8 +11,8 @@ message LoginReq {
 
 message LoginRsp {
 	enum CODE{
-		OK = 1;
-		SYSTEM_ERR = 2;		
+		OK = 0;
+		SYSTEM_ERR = 1;		
 	} 
 	
 	optional CODE Result = 1;

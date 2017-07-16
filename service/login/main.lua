@@ -26,8 +26,7 @@ skynet.start(function()
 		nodelay = true,
 	})
 	LOG_INFO("%s %d", "Watchdog listen on:", tonumber(skynet.getenv("port")))
-  
-  
+    
   -- 测试
   local test_proto = {utc_time = 1234}
   local proto_data = protobuf.encode("client.Heart", test_proto)
