@@ -19,7 +19,7 @@ from client.login_pb2 import *
 
 MSG_TYPE_USE_NAME = 1
 
-host = '192.168.1.111'
+host = '127.0.0.1'
 port = 8081
 #agent_info = auth_rsp()
 
@@ -143,7 +143,7 @@ def socket_func():
                 if len(recv_data) < msg_len + 2:
                     break            
                 format = "%ds%ds" % (name_len, msg_len-name_len-1)        
-                name, msg, = struct.unpack_from(format, recv_data, 3)                        
+                name, msg, = struct.unpack_from(format, recv_data, 3)   
             else:
                 if len(recv_data) < 6:
                     break

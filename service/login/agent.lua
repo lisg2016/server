@@ -6,6 +6,7 @@ local snax = require "snax"
 local protobuf = require "protobuf"
 local sharedata = require "skynet.sharedata"
 local os = require "os"
+local t1 = require "agent_t1"
 
 local WATCHDOG
 local gate
@@ -40,6 +41,11 @@ CLIENT_MSG['client.Heart'] = function (req)
 end
 
 CLIENT_MSG['client.LoginReq'] = function (req)
+  t1.t()
+  is_login = 1
+  send_client_package(client_fd, "client.LoginReq", req)
+  do return end
+  
 	if is_login ~= 0 then
 		return
 	end
@@ -194,6 +200,12 @@ function CMD.start(conf)
 
 	center = skynet.queryservice("login")
   
+  local rsp = {
+		timestamp = skynet.now(),
+		utc_time = os.time(),    
+	}
+  send_client_package(client_fd, "client.Heart", rsp)
+
 end
 
 function CMD.disconnect()
