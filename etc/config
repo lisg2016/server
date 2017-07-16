@@ -35,11 +35,11 @@ bootstrap = "snlua bootstrap"	-- The service for bootstrap
 
 use_gm_cmd = 1
 
-mysql_maxconn = 2					-- mysql数据库最大连接数
-mysql_host = "192.168.78.61"	-- mysql数据库主机
+mysql_maxconn = 2			-- mysql数据库最大连接数
+mysql_host = "192.168.1.101"	-- mysql数据库主机
 mysql_port = 3306		-- mysql数据库端口
-mysql_db = "jdq"		-- mysql数据库库名
-mysql_user = "root"	-- mysql数据库帐号
+mysql_db = "kdmx"		-- mysql数据库库名
+mysql_user = "root"	    -- mysql数据库帐号
 mysql_pwd = "123456"		-- mysql数据库密码
 
 login_port = 8081

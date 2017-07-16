@@ -63,6 +63,10 @@ function login_agent.CMD:start(conf)
   
 	skynet.fork(function()
 		while true do
+		    skynet.sleep(60*100)
+            self:close_agent()
+			do return end
+
 			if skynet.now() - self.recv_pack_last_time >= 1000 then
 				-- self:close_agent()
 			end      
