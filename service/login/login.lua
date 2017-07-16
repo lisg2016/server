@@ -4,6 +4,7 @@ local netpack = require "netpack"
 local socket = require "socket"
 local snax = require "snax"
 local cluster = require "cluster"
+local luadebug = require "LuaDebug_luasockt2_0"
 
 local CMD = {}
 
@@ -14,4 +15,5 @@ skynet.start(function()
 	end)
 
 	skynet.register('login')	
+	luadebug("192.168.1.101", 7003)
 end)

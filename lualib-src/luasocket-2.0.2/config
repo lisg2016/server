@@ -51,7 +51,7 @@ INSTALL_EXEC=cp
 # Compiler and linker settings
 # for Linux
 CC=gcc
-DEF=-DLUASOCKET_DEBUG 
+DEF=-DLUASOCKET_DEBUG -DLUA_COMPAT_APIINTCASTS 
 CFLAGS= $(LUAINC) $(DEF) -pedantic -Wall -O2 -fpic
 LDFLAGS=-O -shared -fpic
 LD=gcc 
