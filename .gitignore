@@ -2,3 +2,4 @@
 /luaclib
 /lualib-src/pbc/build
 /config/main.exe
+/test/pyclient/client/*.pyc

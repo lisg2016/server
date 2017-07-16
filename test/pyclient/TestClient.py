@@ -14,6 +14,7 @@ sys.path.append(".")
 
 import random
 
+from client.common_pb2 import *
 from client.login_pb2 import *
 
 MSG_TYPE_USE_NAME = 1
@@ -51,12 +52,15 @@ def send_msg(msg):
     if MSG_TYPE_USE_NAME:    
         msg_name = msg.DESCRIPTOR.full_name
         msg_buf = msg.SerializeToString()
-        msg_len = 1 + len(msg_name) + 1 + len(msg_buf)
+        #msg_len = 1 + len(msg_name) + 1 + len(msg_buf)
+        msg_len = 1 + len(msg_name) + len(msg_buf)
 
         msg_len_ex = struct.pack('!H', msg_len)
-        msg_name_len_ex = struct.pack('!B', len(msg_name) + 1)
+        #msg_name_len_ex = struct.pack('!B', len(msg_name) + 1)
+        msg_name_len_ex = struct.pack('!B', len(msg_name))
 
-        format = '2s1s%ds%ds' % (len(msg_name)+1, len(msg_buf))    
+        #format = '2s1s%ds%ds' % (len(msg_name)+1, len(msg_buf))    
+        format = '2s1s%ds%ds' % (len(msg_name), len(msg_buf))
         s.send(struct.pack(format, msg_len_ex, msg_name_len_ex, msg_name, msg_buf))
     else:
         msg_name = msg.DESCRIPTOR.full_name
@@ -76,7 +80,7 @@ recv_attr_ = 0
 
 def msg_proc(msg_type, msg_buf):    
     if MSG_TYPE_USE_NAME:
-        msg_type = msg_type[0:len(msg_type)-1]    
+        msg_type = msg_type[0:len(msg_type)]    
     #print len(msg_type)
     #print len("client.time_check")
 
@@ -139,7 +143,7 @@ def socket_func():
                 if len(recv_data) < msg_len + 2:
                     break            
                 format = "%ds%ds" % (name_len, msg_len-name_len-1)        
-                name, msg, = struct.unpack_from(format, recv_data, 3)        
+                name, msg, = struct.unpack_from(format, recv_data, 3)                        
             else:
                 if len(recv_data) < 6:
                     break
@@ -196,6 +200,10 @@ while True:
             msg.SvrId = 1
             if len(param) >= 3:
                 msg.SvrId = int(param[2])
+            send_msg(msg)
+
+        if param[0] == "heart":        
+            msg = Heart()
             send_msg(msg)
 
         if param[0] == "exit":

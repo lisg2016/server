@@ -5,6 +5,7 @@ local socket = require "socket"
 local snax = require "snax"
 local protobuf = require "protobuf"
 local sharedata = require "skynet.sharedata"
+local os = require "os"
 
 local WATCHDOG
 local gate
@@ -30,21 +31,20 @@ local function agent_head()
 end
 
 local CLIENT_MSG = {}
-function CLIENT_MSG.ping(req)
+CLIENT_MSG['client.Heart'] = function (req)
 	local rsp = {
-		name = 'ping',
-		time = skynet.now()
+		timestamp = skynet.now(),
+		utc_time = os.time(),    
 	}
-    send_package(rsp)
+  send_client_package(client_fd, "client.Heart", rsp)
 end
 
-function CLIENT_MSG.login(req)
+CLIENT_MSG['client.LoginReq'] = function (req)
 	if is_login ~= 0 then
 		return
 	end
 
 	local login_rsp = {
-		name = 'login_rsp',
 		result = 'ok',
 	}
 	if req.login == '' then
@@ -156,22 +156,20 @@ skynet.register_protocol {
 	end,
 	dispatch = function (_, _, msg_type, msg_data)
     print("recv:"..msg_type)
-            
+                
     local obj2 = sharedata.query "config_data"
-    print(obj2.CharacterInfo[1][1][1].Desc)
+    print(obj2.CharacterInfo[1][1][1].Name)
+    print(#obj2.CharacterInfo[1][1][1].Name)
 
     local recv_msg = protobuf.decode(msg_type, msg_data)
     if not recv_msg then
       return
     end
-    
-    print(recv_msg)
-    do return end
-    
+
 		recv_pack_last_time = skynet.now()
-		if is_login == 1 or msg_type == 'login' then
-			pcall(CLIENT_MSG[msg.name], msg)
-		end
+		--if is_login == 1 or msg_type == 'client.LoginReq' then
+			pcall(CLIENT_MSG[msg_type], msg)
+		--end
 	end
 }
 
@@ -185,7 +183,7 @@ function CMD.start(conf)
 		while true do
 			if skynet.now() - recv_pack_last_time >= 1000 then
 				-- close_agent()
-			end
+			end      
 			skynet.sleep(500)
 		end
 	end)
@@ -195,6 +193,7 @@ function CMD.start(conf)
 	skynet.call(gate, "lua", "forward", fd)
 
 	center = skynet.queryservice("login")
+  
 end
 
 function CMD.disconnect()

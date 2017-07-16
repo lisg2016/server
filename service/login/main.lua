@@ -43,6 +43,11 @@ skynet.start(function()
   print("111 "..test_proto2.DstRoleId+1)
   print("222 "..test_proto2.SrcRoleId+1)
   
+  test_proto = {Name="22222", HeadIcon=33}
+  proto_data = protobuf.encode("client.RoleBaseExData", test_proto)
+  test_proto2 = protobuf.decode("client.RoleBaseExData", proto_data)
+  print("111 "..test_proto2.HeadIcon)
+
   --local cfg_root = sharedata.query("config_data")
   --print(cfg_root.CharacterInfo[1][1][1].Name)
 

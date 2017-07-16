@@ -104,5 +104,5 @@ end
 
 function send_client_package(fd, name, pack)
   local pack_data = pb_encode(name, pack)
-  socket.write(fd, netpack.msg_pack(name, pack_data))
+  socketdriver.send(fd, netpack.msg_pack(name, pack_data))
 end
