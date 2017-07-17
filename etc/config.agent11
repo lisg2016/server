@@ -10,10 +10,16 @@ log_dirname = "log"
 log_basename = service_name..harbor
 
 -- LUA服务所在位置
-luaservice = "./service/".. service_name .. "/?.lua;" .. luaservice
+luaservice = "./service/".. service_name .. "/?.lua;" 
+             .. "./service/".. service_name .. "/center/?.lua;" 
+             .. "./service/".. service_name .. "/agent/?.lua;" 
+             .. luaservice
 snax = lua_service
 
-lua_path = "./service/".. service_name .. "/?.lua;" .. lua_path
+lua_path = "./service/".. service_name .. "/?.lua;" 
+           .. "./service/".. service_name .. "/center/?.lua;" 
+           .. "./service/".. service_name .. "/agent/?.lua;" 
+           .. lua_path
 
 -- 后台模式
 --daemon = "./".. service_name ..".pid"

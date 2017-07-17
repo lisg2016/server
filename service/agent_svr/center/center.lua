@@ -3,7 +3,7 @@ require "skynet.manager"
 local netpack = require "netpack"
 local socket = require "socket"
 local cluster = require "cluster"
-require "center.login_key_mgr"
+require "login_key_mgr"
 
 center_data =  {
 
