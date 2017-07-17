@@ -3,6 +3,7 @@ local netpack = require "netpack"
 local socket = require "socket"
 local protobuf = require "protobuf"
 local sharedata = require "skynet.sharedata"
+local harbor = require "skynet.harbor"
 local os = require "os"
 
 
@@ -69,12 +70,10 @@ agent_data.CMD['start'] = function (self, conf)
 
 	skynet.call(self.gate, "lua", "forward", fd)
 
-	self.center = skynet.queryservice(svr_config.agentsvr_name())
-    print(svr_config.agentsvr_name())    
+	self.center = harbor.queryname(svr_config.agentsvr_name())
 
 	skynet.fork(function()
 		while true do
-            print(self.is_login, skynet.now() - self.login_time)
             if self.is_login ~= 1 and skynet.now() - self.login_time >= 100 * 10 then
                 self:close_agent()
                 break

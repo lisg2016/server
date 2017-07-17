@@ -49,7 +49,7 @@ debug_console_port_11 = 18001
 debug_console_port_12 = 18002
 
 agent_svr_begin = 11
-agent_svr_end = 12
+agent_svr_end = 11
 agent_gate_num = 4096
 agent_svr_host_11 = "127.0.0.1"
 agent_svr_port_11 = 8082

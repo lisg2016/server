@@ -5,6 +5,7 @@ local socket = require "socket"
 local snax = require "snax"
 local protobuf = require "protobuf"
 local sharedata = require "skynet.sharedata"
+local harbor = require "skynet.harbor"
 local os = require "os"
 
 -- init
@@ -61,7 +62,7 @@ login_agent.CMD['start'] = function (self, conf)
 	self.recv_pack_last_time = skynet.now()
 	skynet.call(self.gate, "lua", "forward", fd)
 
-	self.login = skynet.queryservice("login")
+	self.login = harbor.queryname("login")
   
 	skynet.fork(function()
 		while true do
