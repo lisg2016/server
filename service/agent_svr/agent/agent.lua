@@ -5,6 +5,7 @@ local protobuf = require "protobuf"
 local sharedata = require "skynet.sharedata"
 local harbor = require "skynet.harbor"
 local os = require "os"
+local queue = require "skynet.queue"
 
 agent_login_status_waitlogin = 1
 agent_login_status_logining = 2
@@ -33,7 +34,11 @@ agent_data = {
 
 	login_status = agent_login_status_waitlogin,
 	player_id = 0,
+	svr_id = 0,
 	role_list = nil,
+
+	agent_cs = queue(),
+
 }
 setmetatable(agent_data, {__index = agent_interface})
 

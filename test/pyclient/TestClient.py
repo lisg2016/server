@@ -201,6 +201,10 @@ while True:
             if len(param) >= 3:
                 msg.SvrId = int(param[2])
             send_msg(msg)
+        if param[0] == "create":
+            msg = CreateRoleReq()
+            msg.Name = unicode(param[1], "gbk")
+            send_msg(msg)
 
         if param[0] == "heart":        
             msg = Heart()

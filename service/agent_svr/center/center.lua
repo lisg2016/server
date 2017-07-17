@@ -19,6 +19,7 @@ setmetatable(center_data, {__index = center_interface})
 center_data.login_key_mgr = login_key_mgr:new()
 
 -- 消息处理
+require "center_init"
 require "center_login"
 
 -- 定时器
@@ -35,6 +36,8 @@ skynet.start(function()
 	end)
 
 	skynet.register(svr_config.agentsvr_name(svr_config.harbor_id))	
+
+	center_interface.init(center_data)
 
 	center_data.update()
 end)

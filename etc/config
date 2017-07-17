@@ -32,15 +32,26 @@ lua_path = skynetroot .. "lualib/?.lua;" ..
 start = "main"	-- main script
 bootstrap = "snlua bootstrap"	-- The service for bootstrap
 
-
+test_flag = 1
 use_gm_cmd = 1
 
-mysql_maxconn = 2			-- mysql数据库最大连接数
-mysql_host = "192.168.1.101"	-- mysql数据库主机
-mysql_port = 3306		-- mysql数据库端口
-mysql_db = "kdmx"		-- mysql数据库库名
-mysql_user = "root"	    -- mysql数据库帐号
-mysql_pwd = "123456"		-- mysql数据库密码
+mysql_maxconn = 2			
+mysql_host = "192.168.1.101"	
+mysql_port = 3306		
+mysql_db = "kdmx"		
+mysql_user = "root"	    
+mysql_pwd = "123456"		
+
+redis_maxconn = 2		
+redis_dbindex = 1	
+redis_host1 = "127.0.0.1"	
+redis_port1 = 6379			
+redis_auth1 = "123456"		
+
+redis_host2 = "127.0.0.1"	
+redis_port2 = 6380			
+redis_auth2 = "123456"		
+
 
 login_port = 8081
 login_gate_num = 1024

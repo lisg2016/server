@@ -82,7 +82,7 @@ login_agent.CLIENT_MSG['client.LoginReq'] = function (self, req)
 	login_rsp.LoginKey = "123456"
 
     -- 通知AgentSvr	
-	skynet.send(svr_config.agentsvr_name(agent_svr_id), 'lua', 'login_notify', login_rsp)
+	skynet.send(svr_config.agentsvr_name(agent_svr_id), 'lua', 'login_notify', login_rsp, req)
 	
 	self:send_client(login_rsp)
 end

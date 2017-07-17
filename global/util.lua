@@ -86,6 +86,27 @@ function check_user_online(uid)
 	return skynet.call("gated", "lua", "is_online", uid)
 end
 
+function hash_code(v) 
+    local ch = 0  
+    local val = 0  
+      
+    if(v) then  
+        for i=1,#v do  
+            ch = v:byte(i)  
+            if( ch >= 65 and ch <= 90 ) then  
+                ch = ch + 32  
+            end  
+            val = val*0.7 + ch
+        end  
+    end  
+    -- val = val .. ''  
+    -- val = val:gsub("+","")  
+    -- val = val:gsub("%.","")  
+
+    return math.ceil(val)
+end
+
+
 protobuf.register_file("./protocol/common.pb")
 protobuf.register_file("./protocol/login.pb")
 
