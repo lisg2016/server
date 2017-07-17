@@ -5,11 +5,15 @@ local socket = require "socket"
 local cluster = require "cluster"
 require "login_key_mgr"
 
-center_data =  {
-
+center_interface = {
     -- 服务间消息
 	CMD = {},
 }
+
+center_data =  {
+	login_agent_id = {}
+}
+setmetatable(center_data, {__index = center_interface})
 
 center_data.login_key_mgr = login_key_mgr:new()
 
@@ -25,7 +29,7 @@ end
 
 skynet.start(function() 
 	skynet.dispatch("lua", function(_,_, command, ...)
-		local f = center_data.CMD[command]
+		local f = center_interface.CMD[command]
 		skynet.ret(skynet.pack(f(center_data, ...)))
 	end)
 

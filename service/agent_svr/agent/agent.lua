@@ -6,7 +6,19 @@ local sharedata = require "skynet.sharedata"
 local harbor = require "skynet.harbor"
 local os = require "os"
 
+agent_login_status_waitlogin = 1
+agent_login_status_logining = 2
+agent_login_status_logined = 3
 
+agent_interface = {
+
+    -- 客户端消息
+	CLIENT_MSG = {}, 
+    -- 服务间消息
+	CMD = {},
+}
+
+config_data = nil
 agent_data = {
 	-- service
 	WATCHDOG = nil,
@@ -16,18 +28,20 @@ agent_data = {
 	client_fd = 0,
     login_time = 0,
 	recv_pack_last_time = 0,    
-	is_login = 0,
 
-    -- 客户端消息
-	CLIENT_MSG = {}, 
-    -- 服务间消息
-	CMD = {},
+	login_status = agent_login_status_waitlogin,
+	player_id = 0,
 }
+setmetatable(agent_data, {__index = agent_interface})
 
 require "agent_login"
 
 function agent_data:send_client(pack)
     send_client_package(self.client_fd, pack)
+end
+
+function agent_data:agent_head()
+	return {agent = skynet.self(), fd = self.client_fd, pid = self.player_id}
 end
 
 -- 关闭
@@ -53,8 +67,8 @@ skynet.register_protocol {
         end
 
 	    agent_data.recv_pack_last_time = skynet.now()
-	    if agent_data.is_login == 1 or msg_type == 'client.AgentLoginReq' then
-		    pcall(agent_data.CLIENT_MSG[msg_type], agent_data, recv_msg)
+	    if agent_data.login_status == agent_login_status_logined or msg_type == 'client.AgentLoginReq' then
+		    pcall(agent_interface.CLIENT_MSG[msg_type], agent_data, recv_msg)
 	    end
 	end
 }
@@ -74,7 +88,7 @@ agent_data.CMD['start'] = function (self, conf)
 
 	skynet.fork(function()
 		while true do
-            if self.is_login ~= 1 and skynet.now() - self.login_time >= 100 * 10 then
+            if self.login_status ~= agent_login_status_logined and skynet.now() - self.login_time >= 100 * 10 then
                 self:close_agent()
                 break
             end
@@ -99,9 +113,9 @@ end
 
 skynet.start(function()
 	skynet.dispatch("lua", function(_,_, command, ...)
-		local f = agent_data.CMD[command]
+		local f = agent_interface.CMD[command]
 		skynet.ret(skynet.pack(f(agent_data, ...)))
 	end)
 
-	agent_data.cfg_data = sharedata.query("config_data")
+	config_data = sharedata.query("config_data")
 end)
