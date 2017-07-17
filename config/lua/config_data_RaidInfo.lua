@@ -1,6 +1,5 @@
 return {
 [1] = {
-[1] = {
 Id = 1,
 Name = "1",
 MapId = 1,
@@ -14,10 +13,7 @@ RewardId = 0,
 ActiveVal = 2,
 
 },
-
-},
 [2] = {
-[1] = {
 Id = 2,
 Name = "2",
 MapId = 1,
@@ -31,10 +27,7 @@ RewardId = 0,
 ActiveVal = 0,
 
 },
-
-},
 [3] = {
-[1] = {
 Id = 3,
 Name = "3",
 MapId = 1,
@@ -48,10 +41,7 @@ RewardId = 0,
 ActiveVal = 0,
 
 },
-
-},
 [4] = {
-[1] = {
 Id = 4,
 Name = "4",
 MapId = 1,
@@ -65,10 +55,7 @@ RewardId = 0,
 ActiveVal = 0,
 
 },
-
-},
 [5] = {
-[1] = {
 Id = 5,
 Name = "5",
 MapId = 1,
@@ -82,10 +69,7 @@ RewardId = 0,
 ActiveVal = 0,
 
 },
-
-},
 [6] = {
-[1] = {
 Id = 6,
 Name = "6",
 MapId = 1,
@@ -97,8 +81,6 @@ MonsterAmount = 3,
 FirstRewardId = 0,
 RewardId = 0,
 ActiveVal = 0,
-
-},
 
 },
 

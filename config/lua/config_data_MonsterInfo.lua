@@ -1,6 +1,5 @@
 return {
 [1] = {
-[1] = {
 Id = 1,
 Name = "1",
 ResourceID = "VOLDEMORT_Female010",
@@ -21,10 +20,7 @@ Dog = 0,
 Cri = 0,
 
 },
-
-},
 [2] = {
-[1] = {
 Id = 2,
 Name = "1",
 ResourceID = "HUMAN_Male003",
@@ -43,8 +39,6 @@ Ign = 0,
 Hit = 0,
 Dog = 0,
 Cri = 0,
-
-},
 
 },
 
