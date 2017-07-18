@@ -157,23 +157,6 @@ skynet.register_protocol {
 		return netpack.msg_unpack(msg, sz)
 	end,
 	dispatch = function (_, _, msg_type, msg_data)
-<<<<<<< HEAD
-    print("recv:"..msg_type)
-                
-    local obj2 = sharedata.query "config_data"
-    print(obj2.CharacterInfo[1][1][1].Name)
-    print(#obj2.CharacterInfo[1][1][1].Name)
-
-    local recv_msg = protobuf.decode(msg_type, msg_data)
-    if not recv_msg then
-      return
-    end
-
-		recv_pack_last_time = skynet.now()
-		--if is_login == 1 or msg_type == 'client.LoginReq' then
-			pcall(CLIENT_MSG[msg_type], recv_msg)
-		--end
-=======
         local recv_msg = protobuf.decode(msg_type, msg_data)
         if not recv_msg then
           return
@@ -183,7 +166,6 @@ skynet.register_protocol {
 	    if is_login == 1 or msg_type == 'client.LoginReq' then
 		    pcall(CLIENT_MSG[msg_type], recv_msg)
 	    end
->>>>>>> e95b25c75c8aa8f5a5156853ece0c3a8bf039b1f
 	end
 }
 
