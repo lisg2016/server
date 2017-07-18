@@ -1,4 +1,5 @@
 local skynet = require "skynet"
+local player_data = require "player_data"
 
 -- 添加登录key
 center_interface.CMD['login_notify'] = function (self, req, req_ex)
@@ -92,9 +93,13 @@ center_interface.CMD['agent_login_role'] = function (self, agent_head, role_id)
     local role_data = self.offline_mgr:remove(role_id)
     if role_data == nil then
         -- load
-
+        skynet.send('.loader', 'lua', 'load', role_id, skynet.self(), 'lua', 'agent_login_role', agent_head, role_id)
         return
     end
+
+    print(role_data)
+    player_data.save(role_data)
+
     
     -- 检测旧agent存在
     if self.login_agent_id[agent_head.agent] == nil then

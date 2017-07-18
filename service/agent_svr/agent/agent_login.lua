@@ -130,7 +130,7 @@ local function create_role_req(self, req)
     skynet.call('.redismgr', 'lua', 'set', hash_code(req.Name), 'role_name:'..req.Name, new_role_id)
 
     -- 创建角色数据
-    local role_data_base = {player_id = self.player_id, svr_id = self.svr_id, role_id = new_role_id}
+    local role_data_base = {role_id = new_role_id}
     local role_data = player_data.new(role_data_base)
     player_data.create_role(role_data, new_role_id, self.player_id, self.svr_id, next_role_index, req.Name)
     player_data.save(role_data)

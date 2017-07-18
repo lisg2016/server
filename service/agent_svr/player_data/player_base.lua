@@ -21,7 +21,7 @@ function player_base.save(owner)
     end
 
     local keys = {id = owner.db_data.id}
-    skynet.send(svr_config.sqlmgr_name(owner.base.player_id), 'lua', 'save', 'tb_roles', oper, keys, owner.db_data)
+    skynet.send(svr_config.sqlmgr_name(owner.base.role_id), 'lua', 'save', 'tb_roles', oper, keys, owner.db_data)
 end
 
 return player_base

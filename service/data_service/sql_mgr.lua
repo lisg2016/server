@@ -57,13 +57,30 @@ function CMD.save(tb_name, oper, keys, data)
 	end
 
 	if oper == 'UPDATE' then
+	    local keys_v = {}
+		for k, v in pairs(keys) do
+		    table.insert(keys_v, k.." = '"..v.."'")
+		end
 
-	    return
+	    local data_v = {}
+		for k, v in pairs(data) do
+		    table.insert(data_v, k.." = '"..v.."'")
+		end
+
+		local sql = 'update '..tb_name..' set '..table.concat(data_v, ', ')..' where '..table.concat(keys_v, ' and ')		
+		local rs = db:query(sql)
+		return rs
 	end
 
 	if oper == 'DELETE' then
+	    local keys_v = {}
+		for k, v in pairs(keys) do
+		    table.insert(keys_v, k.." = '"..v.."'")
+		end
 
-	    return
+		local sql = 'delete from '..tb_name..' where '..table.concat(keys_v, ' and ')
+		local rs = db:query(sql)
+		return rs
 	end
 end
 

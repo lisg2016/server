@@ -13,6 +13,7 @@ log_basename = service_name..harbor
 luaservice = "./service/".. service_name .. "/?.lua;" 
              .. "./service/".. service_name .. "/center/?.lua;" 
              .. "./service/".. service_name .. "/agent/?.lua;" 
+             .. "./service/".. service_name .. "/loader/?.lua;" 
              .. luaservice
 snax = lua_service
 

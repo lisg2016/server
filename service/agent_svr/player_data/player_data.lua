@@ -1,11 +1,13 @@
 local skynet = require "skynet"
 local player_base = require "player_base"
+local player_config = require "player_config"
 
 local player_data = {}
 
 function player_data.new(base)
     local new_obj = {}
     new_obj.base = player_base.new(base)
+    new_obj.config = player_config.new(base)
 
     return new_obj
 end
@@ -27,6 +29,7 @@ end
 
 function player_data.save(owner)
     player_base.save(owner.base)
+    player_config.save(owner.config)
     
 end
 
