@@ -6,7 +6,7 @@ master = "127.0.0.1:2013"
 
 
 -- C编写的服务模块路径
-cpath = skynetroot .. "cservice/?.so"
+cpath = skynetroot .. "cservice/?.so;" .. "./cservice/?.so"
 
 -- 将添加到 package.cpath 中的路径，供 require 调用。
 lua_cpath = skynetroot .. "luaclib/?.so;" .. "./luaclib/?.so"

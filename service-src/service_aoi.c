@@ -24,9 +24,14 @@ static int
 aoi_cb(struct skynet_context * context, void *ud, int type, int session, uint32_t source, const void * msg, size_t sz) {
 	struct aoi_service * inst = ud;
 
-    printf("aoi recv type:%d sz:%d\n", type, sz);
+    printf("aoi recv type:%d sz:%d session:%d\n", type, sz, session);
 
-	return 0;
+    //int skynet_sendname(struct skynet_context * context, uint32zzzz_t source, const char * destination , int type, int session, void * msg, size_t sz);
+	//void * dst = skynet_malloc(sz);
+	//memcpy(dst, msg, sz);
+	skynet_sendname(context, 0, "login", PTYPE_RESPONSE, session, msg, sz);
+
+	return 1;
 }
 
 int
