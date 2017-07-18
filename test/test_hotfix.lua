@@ -16,6 +16,18 @@ local function get_up(f)
 end  
 
 
+_G.test_func.t = function (agent)
+  agent.a = agent.a + 2
+  _G.print("data:"..agent.a)
+end
+
+do return end
+
+print(_G.agent_data.a)
+_G.agent_data.a = 100
+do return end
+
+
 local proc_func = _P.client.CLIENT_MSG['client.LoginReq']
 local root_up = get_up(proc_func)
 
