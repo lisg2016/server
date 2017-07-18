@@ -5,7 +5,6 @@ local sprotoloader = require "sprotoloader"
 local protobuf = require "protobuf"
 local sharedata = require "skynet.sharedata"
 
-
 skynet.start(function()
 	print("Server start")
   

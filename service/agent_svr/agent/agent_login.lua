@@ -1,4 +1,5 @@
 local skynet = require "skynet"
+local player_data = require "player_data"
 
 -- 清除退出 
 function agent_interface:quit_agent()
@@ -58,7 +59,11 @@ end
 
 function agent_interface:send_role_list()
     local role_msg = { msg_name = 'client.UserRoleList', RoleData = self.role_list }   
-    self:send_client(role_msg)    
+    self:send_client(role_msg)
+
+    if #self.role_list > 0 then
+        skynet.send(self.center, 'lua', 'agent_login_role', self:agent_head(), self.role_list[1].RoleId)
+    end
 end
 
 agent_interface.CMD['login_check_key_rsp'] = function(self, req)
@@ -125,8 +130,16 @@ local function create_role_req(self, req)
     skynet.call('.redismgr', 'lua', 'set', hash_code(req.Name), 'role_name:'..req.Name, new_role_id)
 
     -- 创建角色数据
-    
-    
+    local role_data_base = {player_id = self.player_id, svr_id = self.svr_id, role_id = new_role_id}
+    local role_data = player_data.new(role_data_base)
+    player_data.create_role(role_data, new_role_id, self.player_id, self.svr_id, next_role_index, req.Name)
+    player_data.save(role_data)
+
+    skynet.send(self.center, 'lua', 'cache_role_data', new_role_id, role_data)
+
+    local new_role_base = {RoleId = role_data.base.db_data.id, RoleIndex = role_data.base.db_data.role_index, Name = role_data.base.db_data.name, Level = role_data.base.db_data.level}
+    table.insert(self.role_list, new_role_base)
+    self:send_role_list()
 end
 
 agent_interface.CLIENT_MSG['client.CreateRoleReq'] = function(self, req)

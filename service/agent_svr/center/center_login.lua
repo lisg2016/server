@@ -84,3 +84,22 @@ center_interface.CMD['login_check_key'] = function (self, agent_head, req)
     self:agent_login_success(agent_login_info, req.PlayerId, login_key.login_req.SvrId)
 end
 
+center_interface.CMD['cache_role_data'] = function (self, role_id, data)
+    self.offline_mgr:add(role_id, data)
+end
+
+center_interface.CMD['agent_login_role'] = function (self, agent_head, role_id)
+    local role_data = self.offline_mgr:remove(role_id)
+    if role_data == nil then
+        -- load
+
+        return
+    end
+    
+    -- 检测旧agent存在
+    if self.login_agent_id[agent_head.agent] == nil then
+        self.offline_mgr:add(role_id, role_data)
+        return
+    end
+
+end

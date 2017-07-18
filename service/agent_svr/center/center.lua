@@ -3,7 +3,10 @@ require "skynet.manager"
 local netpack = require "netpack"
 local socket = require "socket"
 local cluster = require "cluster"
-require "login_key_mgr"
+local login_key_mgr = require "login_key_mgr"
+local offline_mgr = require "offline_mgr"
+local online_mgr = require "online_mgr"
+
 
 center_interface = {
     -- 服务间消息
@@ -17,6 +20,8 @@ center_data =  {
 setmetatable(center_data, {__index = center_interface})
 
 center_data.login_key_mgr = login_key_mgr:new()
+center_data.offline_mgr = offline_mgr:new(10)
+center_data.online_mgr = online_mgr:new()
 
 -- 消息处理
 require "center_init"

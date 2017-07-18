@@ -41,6 +41,32 @@ function CMD.get()
 
 end
 
+
+function CMD.save(tb_name, oper, keys, data)
+    if oper == 'INSERT' then		
+		local data_k = {}
+		local data_v = {}
+		for k, v in pairs(data) do
+		    table.insert(data_k, '`'..k..'`')
+			table.insert(data_v, "'"..v.."'")
+		end
+		
+	    local sql = 'insert into '..tb_name..'('..table.concat(data_k, ', ')..') values('..table.concat(data_v, ', ')..');'
+		local rs = db:query(sql)
+	    return rs
+	end
+
+	if oper == 'UPDATE' then
+
+	    return
+	end
+
+	if oper == 'DELETE' then
+
+	    return
+	end
+end
+
 skynet.start(function()
 	skynet.dispatch("lua", function(_,_, command, ...)
 		local f = CMD[command]

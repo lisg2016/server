@@ -1,6 +1,6 @@
 local skynet = require "skynet"
 
-login_key_mgr = {}
+local login_key_mgr = {}
 login_key_mgr.__index = login_key_mgr
 
 function login_key_mgr:new()
@@ -44,3 +44,5 @@ function login_key_mgr:kick(player_id)
     self.login_key[player_id] = nil
     self.wait_remove[player_id] = nil
 end
+
+return login_key_mgr

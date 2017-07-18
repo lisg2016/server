@@ -7,6 +7,8 @@ local harbor = require "skynet.harbor"
 local os = require "os"
 local queue = require "skynet.queue"
 
+local player_data = require "player_data"
+
 agent_login_status_waitlogin = 1
 agent_login_status_logining = 2
 agent_login_status_logined = 3
