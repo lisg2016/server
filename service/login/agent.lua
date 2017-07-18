@@ -6,18 +6,17 @@ local snax = require "snax"
 local protobuf = require "protobuf"
 local sharedata = require "skynet.sharedata"
 local os = require "os"
-local t1 = require "agent_t1"
 
 local WATCHDOG
 local gate
 local host
-local send_request
 local agent_uid
 
-local CMD = {}
 local client_fd
 local recv_pack_last_time
 local login
+
+local is_login = 0
 
 local function close_agent()
 	if client_fd then
@@ -34,28 +33,25 @@ end
 local CLIENT_MSG = {}
 CLIENT_MSG['client.Heart'] = function (req)
 	local rsp = {
+		msg_name = "client.Heart",
 		timestamp = skynet.now(),
 		utc_time = os.time(),    
 	}
-  send_client_package(client_fd, "client.Heart", rsp)
+  send_client_package(client_fd, rsp)
 end
 
-CLIENT_MSG['client.LoginReq'] = function (req)
-  t1.t()
-  is_login = 1
-  send_client_package(client_fd, "client.LoginReq", req)
-  do return end
-  
+CLIENT_MSG['client.LoginReq'] = function (req)  
 	if is_login ~= 0 then
 		return
 	end
 
 	local login_rsp = {
-		result = 'ok',
+		msg_name = "client.LoginRsp",
+		Result = 'OK',
 	}
 	if req.login == '' then
-		login_rsp.result = 'login error'
-		send_package(login_rsp)
+		login_rsp.Result = 'SYSTEM_ERR'
+		send_client_package(client_fd, login_rsp)
 		return
 	end
   
@@ -161,6 +157,7 @@ skynet.register_protocol {
 		return netpack.msg_unpack(msg, sz)
 	end,
 	dispatch = function (_, _, msg_type, msg_data)
+<<<<<<< HEAD
     print("recv:"..msg_type)
                 
     local obj2 = sharedata.query "config_data"
@@ -176,14 +173,31 @@ skynet.register_protocol {
 		--if is_login == 1 or msg_type == 'client.LoginReq' then
 			pcall(CLIENT_MSG[msg_type], recv_msg)
 		--end
+=======
+        local recv_msg = protobuf.decode(msg_type, msg_data)
+        if not recv_msg then
+          return
+        end
+
+	    recv_pack_last_time = skynet.now()
+	    if is_login == 1 or msg_type == 'client.LoginReq' then
+		    pcall(CLIENT_MSG[msg_type], recv_msg)
+	    end
+>>>>>>> e95b25c75c8aa8f5a5156853ece0c3a8bf039b1f
 	end
 }
 
 -- 服务消息处理
+local CMD = {}
 function CMD.start(conf)
 	local fd = conf.client
 	gate = conf.gate
 	WATCHDOG = conf.watchdog
+	client_fd = fd
+	recv_pack_last_time = skynet.now()
+	skynet.call(gate, "lua", "forward", fd)
+
+	center = skynet.queryservice("login")
   
 	skynet.fork(function()
 		while true do
@@ -194,23 +208,15 @@ function CMD.start(conf)
 		end
 	end)
 
-	client_fd = fd
-	recv_pack_last_time = skynet.now()
-	skynet.call(gate, "lua", "forward", fd)
-
-	center = skynet.queryservice("login")
-  
-  local rsp = {
-		timestamp = skynet.now(),
-		utc_time = os.time(),    
-	}
-  send_client_package(client_fd, "client.Heart", rsp)
-
+    -- 测试
+	--local obj2 = sharedata.query "config_data"
+    --print(obj2.CharacterInfo[1][1][1].Name)
+    --print(#obj2.CharacterInfo[1][1][1].Name)
 end
 
 function CMD.disconnect()
-  print("agent disconnect")
-	close_agent()
+    print("agent disconnect")
+    close_agent()
 end
 
 function CMD.kick()

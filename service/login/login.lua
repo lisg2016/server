@@ -15,5 +15,5 @@ skynet.start(function()
 	end)
 
 	skynet.register('login')	
-	--luadebug("192.168.1.101", 7003)
+	--luadebug("192.168.1.101", 7003)  会阻塞
 end)

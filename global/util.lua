@@ -102,7 +102,9 @@ function send_client(fd, proto, data)
 	socketdriver.send(fd, msg)	
 end
 
-function send_client_package(fd, name, pack)
-  local pack_data = pb_encode(name, pack)
-  socketdriver.send(fd, netpack.msg_pack(name, pack_data))
+function send_client_package(fd, pack)
+  local msg_name = pack.msg_name
+  pack.msg_name = nil
+  local pack_data = pb_encode(msg_name, pack)
+  socketdriver.send(fd, netpack.msg_pack(msg_name, pack_data))
 end
