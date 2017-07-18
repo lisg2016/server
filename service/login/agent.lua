@@ -174,7 +174,7 @@ skynet.register_protocol {
 
 		recv_pack_last_time = skynet.now()
 		--if is_login == 1 or msg_type == 'client.LoginReq' then
-			pcall(CLIENT_MSG[msg_type], msg)
+			pcall(CLIENT_MSG[msg_type], recv_msg)
 		--end
 	end
 }

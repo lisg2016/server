@@ -56,7 +56,7 @@ end
 
 function pb_encode(name, msg)
 	if not msg then
-		LOG_ERROR("msg is nil")
+		LOG_ERROR("msg is nil"..name)
 	end
 
 	local data = protobuf.encode(name, msg)
