@@ -16,7 +16,7 @@ message LoginRsp {
 	} 
 	
 	optional CODE Result = 1;
-	optional uint32 PlayerId = 2;
+	optional uint64 PlayerId = 2;
 	optional string AgentHost = 3;
 	optional uint32 AgentPort = 4;
 	optional string LoginKey = 5;
