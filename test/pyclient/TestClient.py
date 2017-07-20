@@ -95,19 +95,19 @@ def msg_proc(msg_type, msg_buf):
         if msg_type == "client.role_goods_msg":
             print "client.role_goods_msg"
 
-        if msg_type == "client.auth_rsp":
+        if msg_type == "client.LoginRsp":
             global agent_info
             agent_info = msg
 
-            if msg.ret == 1:
+            if msg.PlayerId != 0:
                 global s
 
                 s = socket.socket()
-                s.connect((msg.agent_host,msg.agent_port))
+                s.connect((msg.AgentHost,msg.AgentPort))
 
-                req = agent_login_req()
-                req.user_id = msg.user_id
-                req.login_key = msg.login_key
+                req = AgentLoginReq()
+                req.PlayerId = msg.PlayerId
+                req.LoginKey = msg.LoginKey
 
                 send_msg(req)
 

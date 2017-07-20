@@ -25,6 +25,8 @@ login_agent =  {
 	CLIENT_MSG = {}, 
     -- 服务间消息
 	CMD = {},
+
+    
 }
 
 require "agent_login"
@@ -44,14 +46,14 @@ skynet.register_protocol {
         end
 
 	    login_agent.recv_pack_last_time = skynet.now()
-	    if is_login == 1 or msg_type == 'client.LoginReq' then
+	    if login_agent.is_login == 1 or msg_type == 'client.LoginReq' then
 		    pcall(login_agent.CLIENT_MSG[msg_type], login_agent, recv_msg)
 	    end
 	end
 }
 
 -- 服务消息处理
-function login_agent.CMD:start(conf)
+login_agent.CMD['start'] = function (self, conf)
 	local fd = conf.client
 	self.gate = conf.gate
 	self.WATCHDOG = conf.watchdog
@@ -80,12 +82,12 @@ function login_agent.CMD:start(conf)
     --print(#obj2.CharacterInfo[1][1][1].Name)
 end
 
-function login_agent.CMD:disconnect()
+login_agent.CMD['disconnect'] = function (self)
     print("agent disconnect")
     self:close_agent()
 end
 
-function login_agent.CMD:kick()
+login_agent.CMD['kick'] = function (self)
     skynet.call(self.WATCHDOG, 'lua', 'close', self.client_fd)
 end
 
@@ -94,4 +96,6 @@ skynet.start(function()
 		local f = login_agent.CMD[command]
 		skynet.ret(skynet.pack(f(login_agent, ...)))
 	end)
+
+	login_agent.cfg_data = sharedata.query("config_data")
 end)

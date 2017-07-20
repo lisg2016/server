@@ -22,6 +22,9 @@ function svr_config.get_agentsvr(player_id)
 end
 
 function svr_config.agentsvr_name(id)
+    if id == nil then
+        id = svr_config.harbor_id
+    end
     return "agentsvr"..id
 end
 
