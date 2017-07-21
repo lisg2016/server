@@ -7,8 +7,7 @@ import (
 	"os"
 	"reflect"
 	"strings"
-
-	"Server/pb/config"
+	
 
 	"github.com/extrame/xlsx"
 )
@@ -246,7 +245,7 @@ func (p *%sManager) Get(k ...uint32) %s {
 	}
 
 	if conv_type == "conv" {
-		config.InitRegister()
+		//config.InitRegister()
 
 		for _, cfg := range cfg_excel {
 			xls_file, err := xlsx.OpenFile(EXCEL_DIR + cfg.Table)
@@ -255,7 +254,7 @@ func (p *%sManager) Get(k ...uint32) %s {
 				continue
 			}
 
-			cfg_type, ok := config.NameToType[cfg.Name]
+			cfg_type, ok := "", false //config.NameToType[cfg.Name]
 			if !ok {
 				continue
 			}

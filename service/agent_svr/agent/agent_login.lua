@@ -84,3 +84,20 @@ agent_interface.CMD['login_check_key_rsp'] = function(self, req)
         self.login_status = agent_login_status_waitlogin
     end    
 end
+
+agent_interface.CLIENT_MSG['client.CreateRoleReq'] = function(self, req)
+    if self.role_list == nil or self.login_status ~= agent_login_status_logined then
+        return
+    end
+
+    if #self.role_list >= 3 then
+        local rsp = { msg_name = 'client.CreateRoleRsp', Result = 'ROLEAMOUNT'}
+        self:send_client(rsp)
+        return
+    end
+
+    -- 名字合法性校验
+
+
+end
+
