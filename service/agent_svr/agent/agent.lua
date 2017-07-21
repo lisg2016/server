@@ -28,29 +28,23 @@ agent_data = {
 	client_fd = 0,
     login_time = 0,
 	recv_pack_last_time = 0,    
+	wait_quit_agent_time = 0,
+	shutdown = false,
 
 	login_status = agent_login_status_waitlogin,
 	player_id = 0,
+	
 }
 setmetatable(agent_data, {__index = agent_interface})
 
 require "agent_login"
 
-function agent_data:send_client(pack)
+function agent_interface:send_client(pack)
     send_client_package(self.client_fd, pack)
 end
 
-function agent_data:agent_head()
+function agent_interface:agent_head()
 	return {agent = skynet.self(), fd = self.client_fd, pid = self.player_id}
-end
-
--- 关闭
-function agent_data:close_agent()
-	if self.client_fd then
-		skynet.call(self.gate, "lua", "kick", self.client_fd)
-	end
-
-	skynet.exit()
 end
 
 -- 客户端消息处理
@@ -68,7 +62,9 @@ skynet.register_protocol {
 
 	    agent_data.recv_pack_last_time = skynet.now()
 	    if agent_data.login_status == agent_login_status_logined or msg_type == 'client.AgentLoginReq' then
-		    pcall(agent_interface.CLIENT_MSG[msg_type], agent_data, recv_msg)
+		    local f = agent_interface.CLIENT_MSG[msg_type]
+			f(agent_data, recv_msg)
+		    -- pcall(agent_interface.CLIENT_MSG[msg_type], agent_data, recv_msg)			
 	    end
 	end
 }
@@ -104,7 +100,7 @@ end
 
 agent_data.CMD['disconnect'] = function (self)
     print("agent disconnect")
-    self:close_agent()
+	self:on_socket_close()	
 end
 
 agent_data.CMD['kick'] = function (self)

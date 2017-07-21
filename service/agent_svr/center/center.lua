@@ -11,7 +11,8 @@ center_interface = {
 }
 
 center_data =  {
-	login_agent_id = {}
+	login_agent_id = {},
+	login_player_id = {},
 }
 setmetatable(center_data, {__index = center_interface})
 

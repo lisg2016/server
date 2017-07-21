@@ -28,11 +28,11 @@ function login_key_mgr:add(login_info)
     self.wait_remove[login_info.PlayerId] = skynet.now() + self.remove_time;
 end
 
-function login_key_mgr:del(player_id)
+function login_key_mgr:offline(player_id)
     self.wait_remove[player_id] = skynet.now() + self.remove_time;
 end
 
-function login_key_mgr:use(player_id)
+function login_key_mgr:online(player_id)
     self.wait_remove[player_id] = nil
 end
 
