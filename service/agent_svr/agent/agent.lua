@@ -33,7 +33,7 @@ agent_data = {
 
 	login_status = agent_login_status_waitlogin,
 	player_id = 0,
-	
+	role_list = nil,
 }
 setmetatable(agent_data, {__index = agent_interface})
 

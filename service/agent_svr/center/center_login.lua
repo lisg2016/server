@@ -11,6 +11,7 @@ function center_interface:close_agent(agent)
 	skynet.send(agent, 'lua', 'kick_agent', kick_rsp)
 end
 
+-- 登录成功处理
 function center_interface:agent_login_success(agent_login_info, player_id) 
     agent_login_info.player_id = player_id
 
@@ -50,6 +51,7 @@ center_interface.CMD['agent_offline'] = function (self, agent_head)
     end
 end
 
+-- 登录验证
 center_interface.CMD['login_check_key'] = function (self, agent_head, req)
     local login_key = center_data.login_key_mgr:find(req.PlayerId)
     if login_key == nil or login_key.LoginKey ~= req.LoginKey then
