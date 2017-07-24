@@ -19,6 +19,7 @@ snax = lua_service
 lua_path = "./service/".. service_name .. "/?.lua;" 
            .. "./service/".. service_name .. "/center/?.lua;" 
            .. "./service/".. service_name .. "/agent/?.lua;" 
+        .. "./service/".. service_name .. "/player_data/?.lua;" 
            .. lua_path
 
 -- 后台模式

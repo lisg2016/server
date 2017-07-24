@@ -1,7 +1,6 @@
 return {
 [1] = {
 [1] = {
-[1] = {
 Id = 1,
 Quality = 1,
 ResourceID = "HUMAN_Female001",
@@ -23,10 +22,7 @@ Dog = 20.000000,
 Cri = 20.000000,
 
 },
-
-},
 [2] = {
-[1] = {
 Id = 1,
 Quality = 2,
 ResourceID = "HUMAN_Female001",
@@ -48,10 +44,7 @@ Dog = 30.000000,
 Cri = 30.000000,
 
 },
-
-},
 [3] = {
-[1] = {
 Id = 1,
 Quality = 3,
 ResourceID = "HUMAN_Female001",
@@ -73,10 +66,7 @@ Dog = 40.000000,
 Cri = 40.000000,
 
 },
-
-},
 [4] = {
-[1] = {
 Id = 1,
 Quality = 4,
 ResourceID = "HUMAN_Female001",
@@ -98,10 +88,7 @@ Dog = 50.000000,
 Cri = 50.000000,
 
 },
-
-},
 [5] = {
-[1] = {
 Id = 1,
 Quality = 5,
 ResourceID = "HUMAN_Female001",
@@ -123,10 +110,7 @@ Dog = 60.000000,
 Cri = 60.000000,
 
 },
-
-},
 [6] = {
-[1] = {
 Id = 1,
 Quality = 6,
 ResourceID = "HUMAN_Female001",
@@ -150,10 +134,7 @@ Cri = 70.000000,
 },
 
 },
-
-},
 [2] = {
-[1] = {
 [1] = {
 Id = 2,
 Quality = 1,
@@ -176,10 +157,7 @@ Dog = 20.000000,
 Cri = 20.000000,
 
 },
-
-},
 [2] = {
-[1] = {
 Id = 2,
 Quality = 2,
 ResourceID = "HUMAN_Female004",
@@ -201,10 +179,7 @@ Dog = 30.000000,
 Cri = 30.000000,
 
 },
-
-},
 [3] = {
-[1] = {
 Id = 2,
 Quality = 3,
 ResourceID = "HUMAN_Female004",
@@ -226,10 +201,7 @@ Dog = 40.000000,
 Cri = 40.000000,
 
 },
-
-},
 [4] = {
-[1] = {
 Id = 2,
 Quality = 4,
 ResourceID = "HUMAN_Female004",
@@ -251,10 +223,7 @@ Dog = 50.000000,
 Cri = 50.000000,
 
 },
-
-},
 [5] = {
-[1] = {
 Id = 2,
 Quality = 5,
 ResourceID = "HUMAN_Female004",
@@ -276,10 +245,7 @@ Dog = 60.000000,
 Cri = 60.000000,
 
 },
-
-},
 [6] = {
-[1] = {
 Id = 2,
 Quality = 6,
 ResourceID = "HUMAN_Female004",
@@ -299,8 +265,6 @@ Ign = 70.000000,
 Hit = 70.000000,
 Dog = 70.000000,
 Cri = 70.000000,
-
-},
 
 },
 

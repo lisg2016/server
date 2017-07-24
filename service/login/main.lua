@@ -5,7 +5,6 @@ local sprotoloader = require "sprotoloader"
 local protobuf = require "protobuf"
 local sharedata = require "skynet.sharedata"
 
-
 skynet.start(function()
 	print("Server start")
   
@@ -20,15 +19,9 @@ skynet.start(function()
 	skynet.newservice("debug_console",tonumber(skynet.getenv("debug_console_port_"..svr_config.harbor_id)))
 
   -- 数据库  
-  local db_maxconn = svr_config.db_maxconn
-  local mysql_host = skynet.getenv("mysql_host")
-  local mysql_port = tonumber(skynet.getenv("mysql_port"))
-  local mysql_db = skynet.getenv("mysql_db")
-  local mysql_user = skynet.getenv("mysql_user")
-  local mysql_pwd = skynet.getenv("mysql_pwd")
-  for i = 1, db_maxconn do      
+  for i = 1, svr_config.db_maxconn do      
       local sqlmgr = skynet.newservice("sql_mgr")
-      skynet.call(sqlmgr, "lua", "start", mysql_host, mysql_user, mysql_pwd, mysql_db, mysql_port, i)
+      skynet.call(sqlmgr, "lua", "start", svr_config.mysql_host, svr_config.mysql_user, svr_config.mysql_pwd, svr_config.mysql_db, svr_config.mysql_port, i)
   end
   
 	local center = skynet.uniqueservice("login")

@@ -1,7 +1,8 @@
 local skynet = require "skynet"
 
 -- 添加登录key
-center_interface.CMD['login_notify'] = function (self, req)
+center_interface.CMD['login_notify'] = function (self, req, req_ex)
+    req.login_req = req_ex
     center_data.login_key_mgr:add(req)
 end
 
@@ -12,13 +13,14 @@ function center_interface:close_agent(agent)
 end
 
 -- 登录成功处理
-function center_interface:agent_login_success(agent_login_info, player_id) 
+function center_interface:agent_login_success(agent_login_info, player_id, svr_id) 
     agent_login_info.player_id = player_id
+    agent_login_info.svr_id = svr_id
 
     self.login_player_id[player_id] = agent_login_info
     self.login_key_mgr:online(player_id)
     
-    local login_rsp = { msg_name = 'client.AgentLoginRsp', Result = "OK", PlayerId = player_id}
+    local login_rsp = { msg_name = 'client.AgentLoginRsp', Result = "OK", PlayerId = player_id, SvrId = svr_id}
     skynet.send(agent_login_info.agent_head.agent, 'lua', 'login_check_key_rsp', login_rsp)
 end
 
@@ -46,7 +48,7 @@ center_interface.CMD['agent_offline'] = function (self, agent_head)
     if login_info.next_agent ~= nil then
         local next_login = self.login_agent_id[login_info.next_agent]
         if next_login ~= nil then
-            self:agent_login_success(next_login, login_info.player_id)
+            self:agent_login_success(next_login, login_info.player_id, login_info.svr_id)
         end
     end
 end
@@ -60,7 +62,7 @@ center_interface.CMD['login_check_key'] = function (self, agent_head, req)
         return
     end
 
-    local agent_login_info = { agent_head = agent_head, player_id = 0 }
+    local agent_login_info = { agent_head = agent_head, player_id = 0, svr_id = 0 }
     self.login_agent_id[agent_head.agent] = agent_login_info
     
     -- 处理旧登录
@@ -79,6 +81,25 @@ center_interface.CMD['login_check_key'] = function (self, agent_head, req)
         return
     end
 
-    self:agent_login_success(agent_login_info, req.PlayerId)
+    self:agent_login_success(agent_login_info, req.PlayerId, login_key.login_req.SvrId)
 end
 
+center_interface.CMD['cache_role_data'] = function (self, role_id, data)
+    self.offline_mgr:add(role_id, data)
+end
+
+center_interface.CMD['agent_login_role'] = function (self, agent_head, role_id)
+    local role_data = self.offline_mgr:remove(role_id)
+    if role_data == nil then
+        -- load
+
+        return
+    end
+    
+    -- 检测旧agent存在
+    if self.login_agent_id[agent_head.agent] == nil then
+        self.offline_mgr:add(role_id, role_data)
+        return
+    end
+
+end

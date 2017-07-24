@@ -1,6 +1,5 @@
 return {
 [1] = {
-[1] = {
 Id = 1,
 Name = "",
 Description = "",
@@ -15,8 +14,6 @@ RoleWeaponAmount = 3,
 RoleBagCapacity = 30,
 WeaponBagCapacity = 40,
 ItemBagCapacity = 50,
-
-},
 
 },
 

@@ -32,15 +32,19 @@ type lua_value struct {
 
 type lua_data struct {
 	Keys   map[string]*lua_data
+	StringKey bool
 	Values [][]*lua_value
 }
 
-func dump_lua(data *lua_data) string {
+func dump_lua(data *lua_data, mulit bool) string {
 	result := ""
 	if len(data.Values) != 0 {
 
 		for k, d := range data.Values {
-			sub_r := fmt.Sprintf("[%d] = {\n", k+1)
+			sub_r := ""
+			if mulit {
+			    sub_r = fmt.Sprintf("[%d] = {\n", k+1)
+			}
 
 			for _, dd := range d {
 
@@ -55,14 +59,21 @@ func dump_lua(data *lua_data) string {
 				}
 			}
 
-			sub_r += "\n},\n"
+			if mulit {
+    			sub_r += "\n},\n"
+			}
 			result += sub_r
 		}
 
 	} else {
 		for k, d := range data.Keys {
-			sub_r := fmt.Sprintf("[%s] = {\n", k)
-			sub_r += dump_lua(d)
+			sub_r := ""
+			if data.StringKey {
+                sub_r = fmt.Sprintf("['%s'] = {\n", k)
+			} else {
+			    sub_r = fmt.Sprintf("[%s] = {\n", k)
+			}
+			sub_r += dump_lua(d, mulit)
 			sub_r += "\n},\n"
 
 			result += sub_r
@@ -384,7 +395,7 @@ func (p *%sManager) Get(k ...uint32) %s {
 			}
 
 			var data_root *lua_data = new(lua_data)
-			data_root.Keys = make(map[int]*lua_data)
+			data_root.Keys = make(map[string]*lua_data)
 
 			for row := 4; row < xls_sheet.MaxRow; row++ {
 
@@ -397,7 +408,8 @@ func (p *%sManager) Get(k ...uint32) %s {
 				}
 
 				lua_value_data := []*lua_value{}
-				row_keys := []int{}
+				row_keys := []string{}
+				row_keys_type := []string{}
 
 				for col := 0; col < len(field_name); col++ {
 					xls_fieldname := field_name[col]
@@ -409,15 +421,9 @@ func (p *%sManager) Get(k ...uint32) %s {
 					row_data = new(lua_value)
 					row_data.Name = xls_fieldname
 
-					switch xls_fieldtype {
-					case "uint32":
-						var d int64
-						if d, err = cell_field.Int64(); err != nil {
-							d = 0
-						}
-						row_data.Value = &d
-						is_key := false
 
+					is_key := false
+				    if true {
 						for _, tkey := range cfg.Keys {
 							if tkey == xls_fieldname {
 								is_key = true
@@ -427,10 +433,21 @@ func (p *%sManager) Get(k ...uint32) %s {
 						if len(cfg.Keys) == 0 && xls_fieldname == "Id" {
 							is_key = true
 						}
+					}
 
-						if is_key == true {
-							row_keys = append(row_keys, (int)(d))
+
+					switch xls_fieldtype {
+					case "uint32":
+						var d int64
+						if d, err = cell_field.Int64(); err != nil {
+							d = 0
 						}
+						row_data.Value = &d
+					    if is_key == true {
+							row_keys = append(row_keys, fmt.Sprintf("%d", d))
+							row_keys_type = append(row_keys_type, xls_fieldtype)
+						}
+
 					case "float32", "float64":
 						var d float64
 						if d, err = cell_field.Float(); err != nil {
@@ -443,18 +460,25 @@ func (p *%sManager) Get(k ...uint32) %s {
 							d = ""
 						}
 						row_data.Value = &d
+					    if is_key == true {
+							row_keys = append(row_keys, (string)(d))
+							row_keys_type = append(row_keys_type, xls_fieldtype)
+						}
 					}
 
 					lua_value_data = append(lua_value_data, row_data)
 				}
 
 				var temp_data_root *lua_data = data_root
-				for _, vkey := range row_keys {
+				for index, vkey := range row_keys {
 					if key_root, exists := temp_data_root.Keys[vkey]; exists {
 						temp_data_root = key_root
 					} else {
 						temp_data := new(lua_data)
-						temp_data.Keys = make(map[int]*lua_data)
+						temp_data.Keys = make(map[string]*lua_data)
+						temp_data_root.StringKey = row_keys_type[index] == "string"
+						//println(row_keys[index], row_keys_type[index], temp_data.StringKey)
+
 						temp_data_root.Keys[vkey] = temp_data
 						temp_data_root = temp_data
 					}
@@ -464,7 +488,7 @@ func (p *%sManager) Get(k ...uint32) %s {
 
 			}
 
-			out_data := "return {\n" + dump_lua(data_root) + "\n}"
+			out_data := "return {\n" + dump_lua(data_root, cfg.Multi == 1) + "\n}"
 			ioutil.WriteFile(LUA_DIR+"config_data_"+cfg.Name+".lua", []byte(out_data), os.ModeAppend)
 
 			load_file_data = load_file_data + "data." + cfg.Name + " = require \"config_data_" + cfg.Name + "\"\n"
