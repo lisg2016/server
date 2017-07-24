@@ -1,64 +1,4 @@
 return {
-[3] = {
-[1] = {
-[1] = {
-Id = 3,
-Quality = 1,
-LevelLimit = 1,
-Height = 3,
-ResourceID = "h_axe_006",
-Rotate = 3,
-RotateAngle = 0,
-Atk = 36,
-Dur = 4,
-Cost = 11,
-FlyTime = 3000,
-FlyScale = 0.800000,
-Speed = 55,
-
-},
-
-},
-[2] = {
-[1] = {
-Id = 3,
-Quality = 2,
-LevelLimit = 1,
-Height = 3,
-ResourceID = "h_axe_006",
-Rotate = 3,
-RotateAngle = 0,
-Atk = 45,
-Dur = 5,
-Cost = 11,
-FlyTime = 3000,
-FlyScale = 0.800000,
-Speed = 55,
-
-},
-
-},
-[3] = {
-[1] = {
-Id = 3,
-Quality = 3,
-LevelLimit = 1,
-Height = 3,
-ResourceID = "h_axe_006",
-Rotate = 3,
-RotateAngle = 0,
-Atk = 54,
-Dur = 6,
-Cost = 11,
-FlyTime = 3000,
-FlyScale = 0.800000,
-Speed = 55,
-
-},
-
-},
-
-},
 [1] = {
 [1] = {
 [1] = {
@@ -120,25 +60,6 @@ Speed = 80,
 
 },
 [2] = {
-[1] = {
-[1] = {
-Id = 2,
-Quality = 1,
-LevelLimit = 1,
-Height = 2,
-ResourceID = "m_sword_018",
-Rotate = 2,
-RotateAngle = 0,
-Atk = 24,
-Dur = 3,
-Cost = 8,
-FlyTime = 2500,
-FlyScale = 0.800000,
-Speed = 75,
-
-},
-
-},
 [2] = {
 [1] = {
 Id = 2,
@@ -173,6 +94,85 @@ Cost = 8,
 FlyTime = 2500,
 FlyScale = 0.800000,
 Speed = 75,
+
+},
+
+},
+[1] = {
+[1] = {
+Id = 2,
+Quality = 1,
+LevelLimit = 1,
+Height = 2,
+ResourceID = "m_sword_018",
+Rotate = 2,
+RotateAngle = 0,
+Atk = 24,
+Dur = 3,
+Cost = 8,
+FlyTime = 2500,
+FlyScale = 0.800000,
+Speed = 75,
+
+},
+
+},
+
+},
+[3] = {
+[3] = {
+[1] = {
+Id = 3,
+Quality = 3,
+LevelLimit = 1,
+Height = 3,
+ResourceID = "h_axe_006",
+Rotate = 3,
+RotateAngle = 0,
+Atk = 54,
+Dur = 6,
+Cost = 11,
+FlyTime = 3000,
+FlyScale = 0.800000,
+Speed = 55,
+
+},
+
+},
+[1] = {
+[1] = {
+Id = 3,
+Quality = 1,
+LevelLimit = 1,
+Height = 3,
+ResourceID = "h_axe_006",
+Rotate = 3,
+RotateAngle = 0,
+Atk = 36,
+Dur = 4,
+Cost = 11,
+FlyTime = 3000,
+FlyScale = 0.800000,
+Speed = 55,
+
+},
+
+},
+[2] = {
+[1] = {
+Id = 3,
+Quality = 2,
+LevelLimit = 1,
+Height = 3,
+ResourceID = "h_axe_006",
+Rotate = 3,
+RotateAngle = 0,
+Atk = 45,
+Dur = 5,
+Cost = 11,
+FlyTime = 3000,
+FlyScale = 0.800000,
+Speed = 55,
 
 },
 

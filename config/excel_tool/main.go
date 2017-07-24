@@ -31,7 +31,7 @@ type lua_value struct {
 }
 
 type lua_data struct {
-	Keys   map[int]*lua_data
+	Keys   map[string]*lua_data
 	Values [][]*lua_value
 }
 
@@ -61,7 +61,7 @@ func dump_lua(data *lua_data) string {
 
 	} else {
 		for k, d := range data.Keys {
-			sub_r := fmt.Sprintf("[%d] = {\n", k)
+			sub_r := fmt.Sprintf("[%s] = {\n", k)
 			sub_r += dump_lua(d)
 			sub_r += "\n},\n"
 
