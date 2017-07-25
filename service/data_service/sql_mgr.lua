@@ -41,6 +41,13 @@ function CMD.get()
 
 end
 
+local function string_conv(v)
+    if type(v) == "string" then
+	    local result = mysql.quote_sql_str(v)
+		return result
+	end
+    return v
+end
 
 function CMD.save(tb_name, oper, keys, data)
     if oper == 'INSERT' then		
@@ -48,7 +55,7 @@ function CMD.save(tb_name, oper, keys, data)
 		local data_v = {}
 		for k, v in pairs(data) do
 		    table.insert(data_k, '`'..k..'`')
-			table.insert(data_v, "'"..v.."'")
+    	    table.insert(data_v, ""..string_conv(v).."")
 		end
 		
 	    local sql = 'insert into '..tb_name..'('..table.concat(data_k, ', ')..') values('..table.concat(data_v, ', ')..');'
@@ -59,12 +66,12 @@ function CMD.save(tb_name, oper, keys, data)
 	if oper == 'UPDATE' then
 	    local keys_v = {}
 		for k, v in pairs(keys) do
-		    table.insert(keys_v, k.." = '"..v.."'")
+		    table.insert(keys_v, k.." = "..string_conv(v).."")
 		end
 
 	    local data_v = {}
 		for k, v in pairs(data) do
-		    table.insert(data_v, k.." = '"..v.."'")
+		    table.insert(data_v, k.." = "..string_conv(v).."")
 		end
 
 		local sql = 'update '..tb_name..' set '..table.concat(data_v, ', ')..' where '..table.concat(keys_v, ' and ')		
@@ -75,7 +82,7 @@ function CMD.save(tb_name, oper, keys, data)
 	if oper == 'DELETE' then
 	    local keys_v = {}
 		for k, v in pairs(keys) do
-		    table.insert(keys_v, k.." = '"..v.."'")
+		    table.insert(keys_v, k.." = "..string_conv(v).."")
 		end
 
 		local sql = 'delete from '..tb_name..' where '..table.concat(keys_v, ' and ')
