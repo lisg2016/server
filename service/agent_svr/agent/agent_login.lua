@@ -5,10 +5,14 @@ local player_data = require "player_data"
 function agent_interface:quit_agent()
     if self.login_status == agent_login_status_logined then
         -- update smy
+
         -- write all
+        if self.role_data == nil then
+            player_data.save(self.role_data)
+        end
     end
 
-    skynet.send(self.center, 'lua', 'agent_offline', self:agent_head())
+    skynet.send(self.center, 'lua', 'agent_offline', self:agent_head(), self.role_id, self.role_data)
     if self.game ~= nil then
         skynet.send(self.game, 'lua', 'exit_game', self:agent_head())
     end
@@ -62,7 +66,7 @@ function agent_interface:send_role_list()
     self:send_client(role_msg)
 
     if #self.role_list > 0 then
-        skynet.send(self.center, 'lua', 'agent_login_role', self:agent_head(), self.role_list[1].RoleId)
+        skynet.send(self.center, 'lua', 'agent_login_role_req', self:agent_head(), self.role_list[1].RoleId)
     end
 end
 
@@ -145,3 +149,19 @@ end
 agent_interface.CLIENT_MSG['client.CreateRoleReq'] = function(self, req)
     self.agent_cs(create_role_req, self, req)
 end
+
+function agent_interface:send_personal_info()
+
+end
+
+agent_interface.CMD['agent_login_role_rsp'] = function(self, role_id, role_data)
+    self.role_id = role_id
+    self.role_data = role_data
+
+    -- init data
+
+    self:send_personal_info()
+
+    self:send_client({msg_name = 'client.LoginRoleRsp'})
+end
+

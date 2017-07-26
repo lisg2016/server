@@ -1,4 +1,6 @@
 local skynet = require "skynet"
+local protobuf = require "protobuf"
+
 local player_config = {}
 
 
@@ -12,7 +14,7 @@ function player_config.set_db(owner, db)
     owner.in_db = true
     owner.db_data = db
 
-    -- 解析
+    -- 解析    
 end
 
 function player_config.save(owner)

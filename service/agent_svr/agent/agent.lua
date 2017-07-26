@@ -38,6 +38,8 @@ agent_data = {
 	player_id = 0,
 	svr_id = 0,
 	role_list = nil,
+	role_id = 0, 
+	role_data = nil,
 
 	agent_cs = queue(),
 

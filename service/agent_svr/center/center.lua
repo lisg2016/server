@@ -37,6 +37,10 @@ end
 skynet.start(function() 
 	skynet.dispatch("lua", function(_,_, command, ...)
 		local f = center_interface.CMD[command]
+		if f == nil then
+		    print(command.." not found")
+		    return
+		end
 		skynet.ret(skynet.pack(f(center_data, ...)))
 	end)
 

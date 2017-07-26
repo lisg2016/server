@@ -31,7 +31,7 @@ center_interface.CMD['user_offline'] = function (self, agent_head)
 end
 
 -- agent退出
-center_interface.CMD['agent_offline'] = function (self, agent_head)
+center_interface.CMD['agent_offline'] = function (self, agent_head, role_id, role_data)
     local login_info = self.login_agent_id[agent_head.agent]
     if login_info == nil then
         return 
@@ -43,7 +43,9 @@ center_interface.CMD['agent_offline'] = function (self, agent_head)
         self.login_player_id[login_info.player_id] = nil
 
         -- 数据放回缓存
-
+        if role_data ~= nil then
+            self.offline_mgr:add(role_id, role_data)
+        end
     end
 
     if login_info.next_agent ~= nil then
@@ -89,17 +91,21 @@ center_interface.CMD['cache_role_data'] = function (self, role_id, data)
     self.offline_mgr:add(role_id, data)
 end
 
-center_interface.CMD['agent_login_role'] = function (self, agent_head, role_id)
+function center_interface:on_center_login_proc(role_id, role_data)
+
+end
+
+function center_interface:send_personal_info()
+
+end
+
+center_interface.CMD['agent_login_role_req'] = function (self, agent_head, role_id)
     local role_data = self.offline_mgr:remove(role_id)
     if role_data == nil then
         -- load
-        skynet.send('.loader', 'lua', 'load', role_id, skynet.self(), 'lua', 'agent_login_role', agent_head, role_id)
+        skynet.send('.loader', 'lua', 'load', role_id, skynet.self(), 'lua', 'agent_login_role_req', agent_head, role_id)
         return
     end
-
-    print(role_data)
-    player_data.save(role_data)
-
     
     -- 检测旧agent存在
     if self.login_agent_id[agent_head.agent] == nil then
@@ -107,4 +113,7 @@ center_interface.CMD['agent_login_role'] = function (self, agent_head, role_id)
         return
     end
 
+    self:on_center_login_proc(role_id, role_data)
+
+    skynet.send(agent_head.agent, 'lua', 'agent_login_role_rsp', role_id, role_data)
 end
