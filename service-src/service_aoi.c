@@ -29,7 +29,7 @@ aoi_cb(struct skynet_context * context, void *ud, int type, int session, uint32_
     //int skynet_sendname(struct skynet_context * context, uint32zzzz_t source, const char * destination , int type, int session, void * msg, size_t sz);
 	//void * dst = skynet_malloc(sz);
 	//memcpy(dst, msg, sz);
-	skynet_sendname(context, 0, "login", PTYPE_RESPONSE, session, msg, sz);
+	skynet_sendname(context, 0, "login", PTYPE_RESPONSE | PTYPE_TAG_DONTCOPY, session, msg, sz);
 
 	return 1;
 }
